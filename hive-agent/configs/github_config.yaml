@@ -1,0 +1,16 @@
+target_repos:
+  python:
+    - psf/requests
+    - pallets/flask
+    - tiangolo/fastapi
+    - langchain-ai/langchain
+    - huggingface/transformers
+  javascript:
+    - expressjs/express
+    - axios/axios
+  go:
+    - gin-gonic/gin
+  rust:
+    - tokio-rs/tokio
+max_file_size_kb: 500
+max_files_per_repo: 1000

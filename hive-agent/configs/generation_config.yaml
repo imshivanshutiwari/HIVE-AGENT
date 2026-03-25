@@ -1,0 +1,8 @@
+docstring_style: google
+include_examples: true
+include_type_hints: true
+max_doc_tokens: 512
+test_frameworks:
+  - pytest
+  - hypothesis
+batch_size: 5

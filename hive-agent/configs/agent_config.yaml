@@ -1,0 +1,11 @@
+llm:
+  model: claude-sonnet-4-6
+  max_tokens: 4096
+  temperature: 0.1
+  streaming: true
+langgraph:
+  max_recursion: 50
+  checkpointer: memory
+rate_limits:
+  claude_rpm: 50
+  github_rpm: 30

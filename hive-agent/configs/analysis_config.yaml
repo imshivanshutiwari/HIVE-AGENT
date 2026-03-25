@@ -1,0 +1,17 @@
+cyclomatic_high_threshold: 10
+cognitive_high_threshold: 15
+clone_similarity_threshold: 0.9
+dead_code_confidence: 0.85
+languages:
+  - python
+  - javascript
+  - typescript
+  - go
+  - rust
+  - java
+  - cpp
+  - c
+  - ruby
+  - php
+codebert_batch_size: 32
+max_function_tokens: 512

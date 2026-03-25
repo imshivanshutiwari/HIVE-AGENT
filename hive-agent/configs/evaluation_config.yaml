@@ -1,0 +1,10 @@
+bertscore_model: microsoft/deberta-xlarge-mnli
+rouge_variants:
+  - rouge1
+  - rouge2
+  - rougeL
+coverage_thresholds:
+  functions: 0.8
+  classes: 0.9
+  modules: 0.7
+rubric_pass_score: 18
