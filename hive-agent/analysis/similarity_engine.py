@@ -1,4 +1,5 @@
 """CodeBERT + GraphCodeBERT code similarity embeddings."""
+
 import logging
 from dataclasses import dataclass, field
 from typing import List, Optional, Tuple
@@ -45,7 +46,6 @@ class CodeSimilarityEngine:
         if self._loaded:
             return
         try:
-            import torch
             from transformers import AutoModel, AutoTokenizer
 
             logger.info("Loading CodeBERT model...")
@@ -69,6 +69,7 @@ class CodeSimilarityEngine:
 
         try:
             import torch
+
             tokens = self.tokenizer(
                 code,
                 max_length=512,
@@ -114,7 +115,9 @@ class CodeSimilarityEngine:
         for filepath, func_name, code in codebase_functions:
             emb = self.embed_function(code)
             score = self.cosine_similarity(query_emb, emb)
-            results.append(SimilarFunction(filepath=filepath, function_name=func_name, score=score, code=code))
+            results.append(
+                SimilarFunction(filepath=filepath, function_name=func_name, score=score, code=code)
+            )
         results.sort(key=lambda x: x.score, reverse=True)
         return results[:top_k]
 
@@ -168,10 +171,14 @@ class CodeSimilarityEngine:
         clusters: dict = {}
         for idx, label in enumerate(labels):
             if label not in clusters:
-                clusters[label] = Cluster(cluster_id=int(label), centroid=kmeans.cluster_centers_[label])
+                clusters[label] = Cluster(
+                    cluster_id=int(label), centroid=kmeans.cluster_centers_[label]
+                )
             filepath, func_name, code = codebase_functions[idx]
             clusters[label].functions.append(
-                SimilarFunction(filepath=filepath, function_name=func_name, score=1.0, code=code[:200])
+                SimilarFunction(
+                    filepath=filepath, function_name=func_name, score=1.0, code=code[:200]
+                )
             )
 
         return list(clusters.values())

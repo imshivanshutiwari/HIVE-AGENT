@@ -1,4 +1,5 @@
 """Structured quality rubric for documentation scoring."""
+
 from dataclasses import dataclass
 from typing import Any, Dict
 

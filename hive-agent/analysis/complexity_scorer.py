@@ -1,4 +1,5 @@
 """Cyclomatic and cognitive complexity scoring using radon."""
+
 import logging
 from dataclasses import dataclass, field
 from typing import List, Dict, Optional
@@ -94,6 +95,7 @@ class ComplexityScorer:
 
     def _score_file_ast(self, filepath: str) -> Optional[FileComplexity]:
         from analysis.ast_parser import PythonASTParser
+
         parser = PythonASTParser()
         result = parser.parse_file(filepath)
         if result.parse_error:
@@ -132,7 +134,9 @@ class ComplexityScorer:
             filepath=filepath,
             avg_cyclomatic=avg_cc,
             max_cyclomatic=max_cc,
-            avg_cognitive=sum(f.cognitive for f in functions) / len(functions) if functions else 0.0,
+            avg_cognitive=(
+                sum(f.cognitive for f in functions) / len(functions) if functions else 0.0
+            ),
             functions=functions,
         )
 

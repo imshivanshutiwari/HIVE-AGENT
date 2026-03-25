@@ -1,6 +1,7 @@
 """Parser agent: AST + tree-sitter parsing node."""
+
 import logging
-from typing import Any, Dict, List
+from typing import Any, Dict
 
 from agents.state import HiveAgentState
 
@@ -76,7 +77,15 @@ def parser_node(state: HiveAgentState) -> HiveAgentState:
                     "parse_error": result.parse_error,
                 }
             elif language in ts_parser.parsers or language in [
-                "javascript", "typescript", "go", "rust", "java", "cpp", "c", "ruby", "php"
+                "javascript",
+                "typescript",
+                "go",
+                "rust",
+                "java",
+                "cpp",
+                "c",
+                "ruby",
+                "php",
             ]:
                 ts_result = ts_parser.parse_file(filepath, language)
                 ast_results[filepath] = {

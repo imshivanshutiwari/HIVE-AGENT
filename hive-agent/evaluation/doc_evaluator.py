@@ -1,4 +1,5 @@
 """BERTScore + ROUGE documentation quality evaluation."""
+
 import logging
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional
@@ -18,8 +19,12 @@ class RubricScore:
     @property
     def total_score(self) -> int:
         return (
-            self.completeness + self.accuracy + self.clarity
-            + self.examples + self.edge_cases + self.consistency
+            self.completeness
+            + self.accuracy
+            + self.clarity
+            + self.examples
+            + self.edge_cases
+            + self.consistency
         )
 
     @property
@@ -38,11 +43,10 @@ class CoverageReport:
 class DocumentationEvaluator:
     """BERTScore + ROUGE evaluation of generated documentation."""
 
-    def compute_bertscore(
-        self, generated: List[str], reference: List[str]
-    ) -> Dict[str, Any]:
+    def compute_bertscore(self, generated: List[str], reference: List[str]) -> Dict[str, Any]:
         try:
             from bert_score import score as bert_score_fn
+
             P, R, F1 = bert_score_fn(
                 generated,
                 reference,
@@ -59,9 +63,7 @@ class DocumentationEvaluator:
             logger.warning(f"BERTScore failed: {e}. Using fallback.")
             return self._bertscore_fallback(generated, reference)
 
-    def _bertscore_fallback(
-        self, generated: List[str], reference: List[str]
-    ) -> Dict[str, Any]:
+    def _bertscore_fallback(self, generated: List[str], reference: List[str]) -> Dict[str, Any]:
         """Simple word-overlap fallback for BERTScore."""
         f1_scores = []
         for gen, ref in zip(generated, reference):
@@ -73,7 +75,9 @@ class DocumentationEvaluator:
             intersection = gen_tokens & ref_tokens
             precision = len(intersection) / len(gen_tokens)
             recall = len(intersection) / len(ref_tokens)
-            f1 = (2 * precision * recall / (precision + recall)) if (precision + recall) > 0 else 0.0
+            f1 = (
+                (2 * precision * recall / (precision + recall)) if (precision + recall) > 0 else 0.0
+            )
             f1_scores.append(f1)
         return {
             "precision": f1_scores,
@@ -84,6 +88,7 @@ class DocumentationEvaluator:
     def compute_rouge(self, generated: str, reference: str) -> Dict[str, float]:
         try:
             from rouge_score import rouge_scorer
+
             scorer = rouge_scorer.RougeScorer(["rouge1", "rouge2", "rougeL"], use_stemmer=True)
             scores = scorer.score(reference, generated)
             return {
@@ -95,9 +100,7 @@ class DocumentationEvaluator:
             logger.warning(f"ROUGE failed: {e}")
             return {"rouge1": 0.0, "rouge2": 0.0, "rougeL": 0.0}
 
-    def apply_quality_rubric(
-        self, doc: str, func_info: Dict[str, Any]
-    ) -> RubricScore:
+    def apply_quality_rubric(self, doc: str, func_info: Dict[str, Any]) -> RubricScore:
         score = RubricScore()
         doc_lower = doc.lower()
 

@@ -1,8 +1,9 @@
 """Documentation coverage analysis per codebase."""
+
 import logging
 import os
-from dataclasses import dataclass, field
-from typing import Dict, List
+from dataclasses import dataclass
+from typing import Dict
 
 from analysis.ast_parser import PythonASTParser
 

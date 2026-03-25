@@ -1,6 +1,7 @@
 """Per-class documentation generation."""
+
 import logging
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, Tuple
 
 logger = logging.getLogger(__name__)
 
@@ -10,6 +11,7 @@ class ClassDocGenerator:
 
     def __init__(self):
         from generation.claude_client import ClaudeClient
+
         self.claude = ClaudeClient()
 
     def generate(self, class_info: Dict[str, Any], filepath: str) -> Tuple[str, int]:

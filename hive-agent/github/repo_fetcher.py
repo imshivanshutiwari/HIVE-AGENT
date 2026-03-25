@@ -1,4 +1,5 @@
 """Fetch and clone real GitHub repositories."""
+
 import os
 import logging
 import argparse
@@ -142,7 +143,7 @@ class RepoFetcher:
         rest_data = self.rest.get_repo(owner, repo)
         gql_stats = self.gql.get_repo_stats(owner, repo)
         languages = self.rest.get_languages(owner, repo)
-        issues = self.rest.get_issues(owner, repo)
+        issues = self.rest.get_issues(owner, repo)  # noqa: F841
         prs = self.rest.get_pulls(owner, repo, state="open")
         contributors = self.rest.get_contributors(owner, repo)
         return RepoMetadata(

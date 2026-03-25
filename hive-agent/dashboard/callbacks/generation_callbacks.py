@@ -1,8 +1,6 @@
 """Generation-related Dash callbacks."""
-import logging
 
-from dash import Input, Output, State, no_update
-from dash.exceptions import PreventUpdate
+import logging
 
 logger = logging.getLogger(__name__)
 

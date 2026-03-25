@@ -1,12 +1,11 @@
 """Hypothesis property-based tests for HIVE-AGENT."""
-import ast
+
 import sys
 from pathlib import Path
 from typing import Dict, List
 
 import hypothesis
-import pytest
-from hypothesis import assume, given, settings
+from hypothesis import given, settings
 from hypothesis import strategies as st
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -17,6 +16,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 def test_ast_parser_never_crashes(code_str: str):
     """AST parser should handle any string without unhandled exceptions."""
     from analysis.ast_parser import PythonASTParser
+
     parser = PythonASTParser()
     result = parser.parse_source(code_str)
     # Should either parse successfully or return error; never raise
@@ -47,7 +47,9 @@ def test_cosine_similarity_range(vector: List[float]):
 
 @given(
     st.dictionaries(
-        st.text(min_size=1, max_size=20, alphabet=st.characters(whitelist_categories=("Lu", "Ll", "Nd"))),
+        st.text(
+            min_size=1, max_size=20, alphabet=st.characters(whitelist_categories=("Lu", "Ll", "Nd"))
+        ),
         st.integers(min_value=0, max_value=100),
         min_size=2,
         max_size=10,

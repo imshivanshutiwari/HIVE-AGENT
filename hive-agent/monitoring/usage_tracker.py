@@ -1,4 +1,5 @@
 """Claude API token usage tracking."""
+
 import json
 import logging
 import time
@@ -34,7 +35,7 @@ class UsageSummary:
 class UsageTracker:
     """Track Claude API token usage and costs."""
 
-    COST_PER_INPUT_TOKEN = 3 / 1_000_000   # $3/1M
+    COST_PER_INPUT_TOKEN = 3 / 1_000_000  # $3/1M
     COST_PER_OUTPUT_TOKEN = 15 / 1_000_000  # $15/1M
 
     def __init__(self):
@@ -48,10 +49,7 @@ class UsageTracker:
         input_tokens: int,
         output_tokens: int,
     ) -> APICall:
-        cost = (
-            input_tokens * self.COST_PER_INPUT_TOKEN
-            + output_tokens * self.COST_PER_OUTPUT_TOKEN
-        )
+        cost = input_tokens * self.COST_PER_INPUT_TOKEN + output_tokens * self.COST_PER_OUTPUT_TOKEN
         call = APICall(
             timestamp=time.time(),
             model=model,
@@ -76,5 +74,7 @@ class UsageTracker:
             summary.total_cost_usd += call.cost_usd
             summary.calls_by_agent[call.agent] = summary.calls_by_agent.get(call.agent, 0) + 1
             tokens = call.input_tokens + call.output_tokens
-            summary.tokens_by_agent[call.agent] = summary.tokens_by_agent.get(call.agent, 0) + tokens
+            summary.tokens_by_agent[call.agent] = (
+                summary.tokens_by_agent.get(call.agent, 0) + tokens
+            )
         return summary

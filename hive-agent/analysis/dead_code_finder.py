@@ -1,4 +1,5 @@
 """Detect unreachable / dead code via reachability analysis."""
+
 import ast
 import logging
 from dataclasses import dataclass
@@ -39,7 +40,7 @@ class DeadCodeFinder:
                 body = node.body
                 for i, stmt in enumerate(body[:-1]):
                     if isinstance(stmt, (ast.Return, ast.Raise)):
-                        remaining = body[i + 1:]
+                        remaining = body[i + 1 :]
                         if remaining and not all(
                             isinstance(s, (ast.Pass, ast.Expr)) for s in remaining
                         ):

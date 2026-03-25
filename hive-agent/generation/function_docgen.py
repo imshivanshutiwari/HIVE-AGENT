@@ -1,4 +1,5 @@
 """Per-function Google-style docstring generation."""
+
 import logging
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -11,6 +12,7 @@ class FunctionDocGenerator:
     def __init__(self):
         from generation.claude_client import ClaudeClient
         from agents.tools import TOOLS_DOC
+
         self.claude = ClaudeClient()
         self.tools = TOOLS_DOC
 
@@ -32,7 +34,8 @@ class FunctionDocGenerator:
 
         prompt = (
             f"Generate a complete Google-style Python docstring for this function.\n"
-            f"Include: one-line summary, Args section, Returns section, Raises section (if applicable), "
+            f"Include: one-line summary, Args section, Returns section,"
+            f" Raises section (if applicable), "
             f"and a usage Example.\n\n"
             f"Function:\n```python\n{func_source[:2000]}\n```\n\n"
             f"Args: {args}\nReturn type: {return_type}\nCalls: {calls_made[:5]}\n"
@@ -47,7 +50,9 @@ class FunctionDocGenerator:
             return self._template_docstring(func_name, args, return_type), 0
 
     def _template_docstring(self, name: str, args: List[str], return_type: str) -> str:
-        args_section = "\n".join(f"    {a}: Description of {a}." for a in args if a not in ("self", "cls"))
+        args_section = "\n".join(
+            f"    {a}: Description of {a}." for a in args if a not in ("self", "cls")
+        )
         return (
             f"{name.replace('_', ' ').capitalize()}.\n\n"
             f"Args:\n{args_section or '    None'}\n\n"

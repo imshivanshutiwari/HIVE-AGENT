@@ -1,4 +1,5 @@
 """Analyze commit history from GitHub repos."""
+
 import logging
 from dataclasses import dataclass
 from datetime import datetime

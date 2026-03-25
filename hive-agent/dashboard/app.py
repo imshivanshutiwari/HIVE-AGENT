@@ -1,19 +1,27 @@
 """HIVE-AGENT Dev Intelligence Ops Dashboard."""
+
 import logging
 import threading
 import time
 import webbrowser
-from typing import Dict, Optional
+from typing import Dict
 
 import dash
 import dash_bootstrap_components as dbc
-from dash import Input, Output, State, dcc, html, no_update
-from dash.exceptions import PreventUpdate
+from dash import Input, Output, State, dcc, html
 from dotenv import load_dotenv
 
 from dashboard.theme import (
-    BG_PRIMARY, BG_PANEL, BG_CARD, ACCENT_BLUE, SUCCESS, WARNING,
-    CRITICAL, INFO, TEXT, TEXT_DIM, BORDER, FONT, HEADER_STYLE,
+    BG_PRIMARY,
+    BG_PANEL,
+    ACCENT_BLUE,
+    SUCCESS,
+    WARNING,
+    INFO,
+    TEXT,
+    BORDER,
+    FONT,
+    HEADER_STYLE,
 )
 
 load_dotenv()
@@ -30,42 +38,151 @@ server = app.server
 
 
 def make_header() -> html.Div:
-    return html.Div([
-        html.Div([
-            html.Span("◈ HIVE-AGENT", style={"color": ACCENT_BLUE, "fontWeight": "bold", "fontSize": "14px"}),
-            html.Span("  [CODEBASE INTELLIGENCE v1.0]", style={"color": TEXT, "fontSize": "11px"}),
-        ]),
-        html.Div([
-            html.Span(id="header-repos", children="REPOS ANALYZED: 0", style={"marginRight": "16px", "color": TEXT, "fontSize": "10px"}),
-            html.Span(id="header-docs", children="DOCS GENERATED: 0", style={"marginRight": "16px", "color": TEXT, "fontSize": "10px"}),
-            html.Span(id="header-tokens", children="TOKENS USED: 0", style={"marginRight": "16px", "color": TEXT, "fontSize": "10px"}),
-            html.Span(id="header-cost", children="COST: $0.000", style={"marginRight": "16px", "color": WARNING, "fontSize": "10px"}),
-            html.Span("● ONLINE", style={"color": SUCCESS, "fontSize": "10px"}),
-        ]),
-        html.Div([
-            html.Span("[CLAUDE: claude-sonnet-4-6]", style={"marginRight": "8px", "color": ACCENT_BLUE, "fontSize": "9px", "border": f"1px solid {BORDER}", "padding": "1px 4px"}),
-            html.Span("[GITHUB: CONNECTED]", style={"marginRight": "8px", "color": SUCCESS, "fontSize": "9px", "border": f"1px solid {BORDER}", "padding": "1px 4px"}),
-            html.Span("[CODEBERT: LOADED]", style={"marginRight": "8px", "color": ACCENT_BLUE, "fontSize": "9px", "border": f"1px solid {BORDER}", "padding": "1px 4px"}),
-            html.Span("[LANGGRAPH: 8 NODES]", style={"marginRight": "8px", "color": INFO, "fontSize": "9px", "border": f"1px solid {BORDER}", "padding": "1px 4px"}),
-            html.Span("[RATE: OK]", style={"color": SUCCESS, "fontSize": "9px", "border": f"1px solid {BORDER}", "padding": "1px 4px"}),
-        ]),
-    ], style={**HEADER_STYLE, "display": "flex", "justifyContent": "space-between", "alignItems": "center"})
+    return html.Div(
+        [
+            html.Div(
+                [
+                    html.Span(
+                        "◈ HIVE-AGENT",
+                        style={"color": ACCENT_BLUE, "fontWeight": "bold", "fontSize": "14px"},
+                    ),
+                    html.Span(
+                        "  [CODEBASE INTELLIGENCE v1.0]", style={"color": TEXT, "fontSize": "11px"}
+                    ),
+                ]
+            ),
+            html.Div(
+                [
+                    html.Span(
+                        id="header-repos",
+                        children="REPOS ANALYZED: 0",
+                        style={"marginRight": "16px", "color": TEXT, "fontSize": "10px"},
+                    ),
+                    html.Span(
+                        id="header-docs",
+                        children="DOCS GENERATED: 0",
+                        style={"marginRight": "16px", "color": TEXT, "fontSize": "10px"},
+                    ),
+                    html.Span(
+                        id="header-tokens",
+                        children="TOKENS USED: 0",
+                        style={"marginRight": "16px", "color": TEXT, "fontSize": "10px"},
+                    ),
+                    html.Span(
+                        id="header-cost",
+                        children="COST: $0.000",
+                        style={"marginRight": "16px", "color": WARNING, "fontSize": "10px"},
+                    ),
+                    html.Span("● ONLINE", style={"color": SUCCESS, "fontSize": "10px"}),
+                ]
+            ),
+            html.Div(
+                [
+                    html.Span(
+                        "[CLAUDE: claude-sonnet-4-6]",
+                        style={
+                            "marginRight": "8px",
+                            "color": ACCENT_BLUE,
+                            "fontSize": "9px",
+                            "border": f"1px solid {BORDER}",
+                            "padding": "1px 4px",
+                        },
+                    ),
+                    html.Span(
+                        "[GITHUB: CONNECTED]",
+                        style={
+                            "marginRight": "8px",
+                            "color": SUCCESS,
+                            "fontSize": "9px",
+                            "border": f"1px solid {BORDER}",
+                            "padding": "1px 4px",
+                        },
+                    ),
+                    html.Span(
+                        "[CODEBERT: LOADED]",
+                        style={
+                            "marginRight": "8px",
+                            "color": ACCENT_BLUE,
+                            "fontSize": "9px",
+                            "border": f"1px solid {BORDER}",
+                            "padding": "1px 4px",
+                        },
+                    ),
+                    html.Span(
+                        "[LANGGRAPH: 8 NODES]",
+                        style={
+                            "marginRight": "8px",
+                            "color": INFO,
+                            "fontSize": "9px",
+                            "border": f"1px solid {BORDER}",
+                            "padding": "1px 4px",
+                        },
+                    ),
+                    html.Span(
+                        "[RATE: OK]",
+                        style={
+                            "color": SUCCESS,
+                            "fontSize": "9px",
+                            "border": f"1px solid {BORDER}",
+                            "padding": "1px 4px",
+                        },
+                    ),
+                ]
+            ),
+        ],
+        style={
+            **HEADER_STYLE,
+            "display": "flex",
+            "justifyContent": "space-between",
+            "alignItems": "center",
+        },
+    )
 
 
-app.layout = html.Div([
-    make_header(),
-    dbc.Tabs([
-        dbc.Tab(label="◈ REPO OPS CENTER", tab_id="tab-repo-ops", label_style={"fontFamily": FONT, "fontSize": "10px", "color": ACCENT_BLUE}),
-        dbc.Tab(label="◈ CODE INTELLIGENCE", tab_id="tab-code-intel", label_style={"fontFamily": FONT, "fontSize": "10px", "color": ACCENT_BLUE}),
-        dbc.Tab(label="◈ AGENT FLOW", tab_id="tab-agent-flow", label_style={"fontFamily": FONT, "fontSize": "10px", "color": ACCENT_BLUE}),
-        dbc.Tab(label="◈ DOC QUALITY", tab_id="tab-doc-quality", label_style={"fontFamily": FONT, "fontSize": "10px", "color": ACCENT_BLUE}),
-        dbc.Tab(label="◈ REPO HEALTH", tab_id="tab-repo-health", label_style={"fontFamily": FONT, "fontSize": "10px", "color": ACCENT_BLUE}),
-    ], id="main-tabs", active_tab="tab-repo-ops",
-       style={"backgroundColor": BG_PANEL, "borderBottom": f"1px solid {BORDER}"}),
-    html.Div(id="tab-content", style={"backgroundColor": BG_PRIMARY, "minHeight": "100vh", "padding": "12px"}),
-    dcc.Store(id="global-state", data={}),
-    dcc.Interval(id="header-update", interval=5000),
-], style={"backgroundColor": BG_PRIMARY, "minHeight": "100vh"})
+app.layout = html.Div(
+    [
+        make_header(),
+        dbc.Tabs(
+            [
+                dbc.Tab(
+                    label="◈ REPO OPS CENTER",
+                    tab_id="tab-repo-ops",
+                    label_style={"fontFamily": FONT, "fontSize": "10px", "color": ACCENT_BLUE},
+                ),
+                dbc.Tab(
+                    label="◈ CODE INTELLIGENCE",
+                    tab_id="tab-code-intel",
+                    label_style={"fontFamily": FONT, "fontSize": "10px", "color": ACCENT_BLUE},
+                ),
+                dbc.Tab(
+                    label="◈ AGENT FLOW",
+                    tab_id="tab-agent-flow",
+                    label_style={"fontFamily": FONT, "fontSize": "10px", "color": ACCENT_BLUE},
+                ),
+                dbc.Tab(
+                    label="◈ DOC QUALITY",
+                    tab_id="tab-doc-quality",
+                    label_style={"fontFamily": FONT, "fontSize": "10px", "color": ACCENT_BLUE},
+                ),
+                dbc.Tab(
+                    label="◈ REPO HEALTH",
+                    tab_id="tab-repo-health",
+                    label_style={"fontFamily": FONT, "fontSize": "10px", "color": ACCENT_BLUE},
+                ),
+            ],
+            id="main-tabs",
+            active_tab="tab-repo-ops",
+            style={"backgroundColor": BG_PANEL, "borderBottom": f"1px solid {BORDER}"},
+        ),
+        html.Div(
+            id="tab-content",
+            style={"backgroundColor": BG_PRIMARY, "minHeight": "100vh", "padding": "12px"},
+        ),
+        dcc.Store(id="global-state", data={}),
+        dcc.Interval(id="header-update", interval=5000),
+    ],
+    style={"backgroundColor": BG_PRIMARY, "minHeight": "100vh"},
+)
 
 
 @app.callback(
@@ -77,18 +194,23 @@ def render_tab(active_tab: str, global_state: Dict) -> html.Div:
     state = global_state or {}
     if active_tab == "tab-repo-ops":
         from dashboard.pages.repo_ops import render_page
+
         return render_page(state)
     elif active_tab == "tab-code-intel":
         from dashboard.pages.code_intel import render_page
+
         return render_page(state)
     elif active_tab == "tab-agent-flow":
         from dashboard.pages.agent_flow import render_page
+
         return render_page(state)
     elif active_tab == "tab-doc-quality":
         from dashboard.pages.doc_quality import render_page
+
         return render_page(state)
     elif active_tab == "tab-repo-health":
         from dashboard.pages.repo_health import render_page
+
         return render_page(state)
     return html.Div("Unknown tab", style={"color": TEXT})
 
@@ -115,7 +237,8 @@ def update_header(n, global_state):
     )
 
 
-from dashboard.callbacks.analysis_callbacks import register_callbacks as reg_analysis
+from dashboard.callbacks.analysis_callbacks import register_callbacks as reg_analysis  # noqa: E402
+
 reg_analysis(app)
 
 

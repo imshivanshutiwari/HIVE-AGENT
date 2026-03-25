@@ -1,6 +1,7 @@
 """Test agent: auto-generate pytest + Hypothesis tests."""
+
 import logging
-from typing import Any, Dict, List
+from typing import Dict
 
 from agents.state import HiveAgentState
 
@@ -38,9 +39,12 @@ def test_agent_node(state: HiveAgentState) -> HiveAgentState:
                 tests_generated += 1
 
             # Generate hypothesis tests
-            hyp_tests, tokens2 = test_gen.generate_hypothesis_tests_for_file(functions[:2], filepath)
+            hyp_tests, tokens2 = test_gen.generate_hypothesis_tests_for_file(
+                functions[:2], filepath
+            )
             if hyp_tests:
-                hyp_key = f"tests/generated/test_hypothesis_{filepath.replace('/', '_').replace('.', '_')}.py"
+                safe_name = filepath.replace("/", "_").replace(".", "_")
+                hyp_key = f"tests/generated/test_hypothesis_{safe_name}.py"
                 generated_tests[hyp_key] = hyp_tests
                 tokens_used += tokens2
 

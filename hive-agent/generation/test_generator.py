@@ -1,4 +1,5 @@
 """pytest + Hypothesis test generation using Claude."""
+
 import logging
 from typing import Any, Dict, List, Tuple
 
@@ -10,12 +11,13 @@ class TestGenerator:
 
     def __init__(self):
         from generation.claude_client import ClaudeClient
+
         self.claude = ClaudeClient()
 
     def generate_unit_tests(self, func_info: Dict[str, Any]) -> Tuple[str, int]:
         func_name = func_info.get("name", "unknown")
         func_source = func_info.get("source", "")
-        args = func_info.get("args", [])
+        args = func_info.get("args", [])  # noqa: F841
 
         prompt = (
             f"Generate complete pytest unit tests for this Python function.\n"
@@ -42,7 +44,8 @@ class TestGenerator:
             f"Test properties/invariants that should always hold.\n\n"
             f"Function:\n```python\n{func_source[:2000]}\n```\n\n"
             f"Return type: {return_type}\n\n"
-            f"Return a complete valid Python test file with 'from hypothesis import given, strategies as st'."
+            f"Return a complete valid Python test file with"
+            f" 'from hypothesis import given, strategies as st'."
         )
         try:
             text, tokens = self.claude.generate(prompt)

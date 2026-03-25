@@ -1,4 +1,5 @@
 """Full repository README generation."""
+
 import logging
 from typing import Any, Dict, List, Tuple
 
@@ -10,6 +11,7 @@ class RepoDocGenerator:
 
     def __init__(self):
         from generation.claude_client import ClaudeClient
+
         self.claude = ClaudeClient()
 
     def generate(

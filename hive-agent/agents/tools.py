@@ -1,9 +1,6 @@
 """All @tool functions for Claude tool_use in LangGraph agents."""
-import ast
-import json
+
 import logging
-import os
-from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -165,9 +162,7 @@ TOOLS_SIMILARITY = [
         "description": "Detect code clones above similarity threshold",
         "input_schema": {
             "type": "object",
-            "properties": {
-                "threshold": {"type": "number", "default": 0.9}
-            },
+            "properties": {"threshold": {"type": "number", "default": 0.9}},
         },
     },
     {
@@ -175,9 +170,7 @@ TOOLS_SIMILARITY = [
         "description": "Cluster functions by semantic similarity",
         "input_schema": {
             "type": "object",
-            "properties": {
-                "n_clusters": {"type": "integer", "default": 20}
-            },
+            "properties": {"n_clusters": {"type": "integer", "default": 20}},
         },
     },
     {

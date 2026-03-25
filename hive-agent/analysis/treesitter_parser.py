@@ -1,4 +1,5 @@
 """tree-sitter parser for 9 languages beyond Python."""
+
 import logging
 import os
 from dataclasses import dataclass, field
@@ -38,8 +39,14 @@ FUNCTION_QUERIES = {
     "go": "(function_declaration name: (identifier) @name) @func",
     "rust": "(function_item name: (identifier) @name) @func",
     "java": "(method_declaration name: (identifier) @name) @func",
-    "cpp": "(function_definition declarator: (function_declarator declarator: (identifier) @name)) @func",
-    "c": "(function_definition declarator: (function_declarator declarator: (identifier) @name)) @func",
+    "cpp": (
+        "(function_definition declarator:"
+        " (function_declarator declarator: (identifier) @name)) @func"
+    ),
+    "c": (
+        "(function_definition declarator:"
+        " (function_declarator declarator: (identifier) @name)) @func"
+    ),
     "ruby": "(method name: (identifier) @name) @func",
     "php": "(function_definition name: (name) @name) @func",
 }
@@ -100,6 +107,7 @@ class TreeSitterParser:
         for lang_name, module_name in lang_map.items():
             try:
                 import importlib
+
                 lang_module = importlib.import_module(module_name)
                 parser = Parser()
                 if hasattr(lang_module, "language"):
@@ -145,12 +153,11 @@ class TreeSitterParser:
 
         return result
 
-    def extract_functions(
-        self, tree, source: bytes, language: str
-    ) -> List[FunctionNode]:
+    def extract_functions(self, tree, source: bytes, language: str) -> List[FunctionNode]:
         functions = []
         try:
-            from tree_sitter import Language as TSLanguage
+            pass
+
             query_str = FUNCTION_QUERIES.get(language, "")
             if not query_str or language not in self.parsers:
                 return []
@@ -164,9 +171,11 @@ class TreeSitterParser:
                     func_name = ""
                     for child, child_name in captures:
                         if child_name == "name" and child.parent == node:
-                            func_name = source[child.start_byte:child.end_byte].decode("utf-8", errors="ignore")
+                            func_name = source[child.start_byte : child.end_byte].decode(
+                                "utf-8", errors="ignore"
+                            )
                             break
-                    body = source[node.start_byte:node.end_byte].decode("utf-8", errors="ignore")
+                    body = source[node.start_byte : node.end_byte].decode("utf-8", errors="ignore")
                     functions.append(
                         FunctionNode(
                             name=func_name,
@@ -185,8 +194,12 @@ class TreeSitterParser:
         """Fallback: walk tree looking for function nodes."""
         functions = []
         function_node_types = {
-            "function_declaration", "function_definition", "function_item",
-            "method_declaration", "method_definition", "arrow_function",
+            "function_declaration",
+            "function_definition",
+            "function_item",
+            "method_declaration",
+            "method_definition",
+            "arrow_function",
         }
 
         def walk(node):
@@ -197,10 +210,13 @@ class TreeSitterParser:
                         name_child = child
                         break
                 func_name = (
-                    source[name_child.start_byte:name_child.end_byte].decode("utf-8", errors="ignore")
-                    if name_child else "<anonymous>"
+                    source[name_child.start_byte : name_child.end_byte].decode(
+                        "utf-8", errors="ignore"
+                    )
+                    if name_child
+                    else "<anonymous>"
                 )
-                body = source[node.start_byte:min(node.end_byte, node.start_byte + 500)].decode(
+                body = source[node.start_byte : min(node.end_byte, node.start_byte + 500)].decode(
                     "utf-8", errors="ignore"
                 )
                 functions.append(
@@ -236,7 +252,7 @@ class TreeSitterParser:
 
         def walk(node):
             if node.type in node_types:
-                text = source[node.start_byte:node.end_byte].decode("utf-8", errors="ignore")
+                text = source[node.start_byte : node.end_byte].decode("utf-8", errors="ignore")
                 imports.append(text.strip()[:200])
             for child in node.children:
                 walk(child)

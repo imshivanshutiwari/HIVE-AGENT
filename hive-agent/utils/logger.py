@@ -1,4 +1,5 @@
 """Structured logging setup for HIVE-AGENT."""
+
 import logging
 import os
 import sys
@@ -11,7 +12,9 @@ def get_logger(name: str, level: Optional[str] = None) -> logging.Logger:
     if logger.handlers:
         return logger
 
-    log_level = getattr(logging, (level or os.environ.get("LOG_LEVEL", "INFO")).upper(), logging.INFO)
+    log_level = getattr(
+        logging, (level or os.environ.get("LOG_LEVEL", "INFO")).upper(), logging.INFO
+    )
     logger.setLevel(log_level)
 
     handler = logging.StreamHandler(sys.stdout)

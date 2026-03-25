@@ -1,6 +1,6 @@
 """HiveAgentState TypedDict for LangGraph StateGraph."""
+
 from typing import TypedDict, List, Dict, Optional, Any
-import networkx as nx
 
 
 class HiveAgentState(TypedDict, total=False):

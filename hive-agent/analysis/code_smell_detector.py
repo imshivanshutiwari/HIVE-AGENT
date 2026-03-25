@@ -1,8 +1,9 @@
 """Detect code smells and anti-patterns."""
+
 import ast
 import logging
-from dataclasses import dataclass, field
-from typing import List, Optional
+from dataclasses import dataclass
+from typing import List
 
 logger = logging.getLogger(__name__)
 
@@ -52,7 +53,10 @@ class CodeSmellDetector:
                             name=f"Long method: {node.name}",
                             filepath=filepath,
                             line=node.lineno,
-                            description=f"Method '{node.name}' has {length} lines (>{self.LONG_METHOD_THRESHOLD})",
+                            description=(
+                                f"Method '{node.name}' has {length} lines"
+                                f" (>{self.LONG_METHOD_THRESHOLD})"
+                            ),
                             severity="medium",
                             category="long_method",
                         )
@@ -64,8 +68,7 @@ class CodeSmellDetector:
         for node in ast.walk(tree):
             if isinstance(node, ast.ClassDef):
                 methods = [
-                    n for n in node.body
-                    if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))
+                    n for n in node.body if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))
                 ]
                 if len(methods) > self.GOD_CLASS_THRESHOLD:
                     smells.append(
@@ -73,7 +76,10 @@ class CodeSmellDetector:
                             name=f"God class: {node.name}",
                             filepath=filepath,
                             line=node.lineno,
-                            description=f"Class '{node.name}' has {len(methods)} methods (>{self.GOD_CLASS_THRESHOLD})",
+                            description=(
+                                f"Class '{node.name}' has {len(methods)} methods"
+                                f" (>{self.GOD_CLASS_THRESHOLD})"
+                            ),
                             severity="high",
                             category="god_class",
                         )
@@ -134,7 +140,7 @@ class CodeSmellDetector:
         seen_blocks: dict = {}
         block_size = 5
         for i in range(len(lines) - block_size):
-            block = "\n".join(lines[i: i + block_size]).strip()
+            block = "\n".join(lines[i : i + block_size]).strip()
             if len(block) < 50:
                 continue
             if block in seen_blocks:
@@ -143,7 +149,10 @@ class CodeSmellDetector:
                         name="Duplicate code block",
                         filepath=filepath,
                         line=i + 1,
-                        description=f"Duplicate code block also appears at line {seen_blocks[block] + 1}",
+                        description=(
+                            f"Duplicate code block also appears at line"
+                            f" {seen_blocks[block] + 1}"
+                        ),
                         severity="medium",
                         category="clone_code",
                     )

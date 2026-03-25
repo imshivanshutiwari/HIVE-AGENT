@@ -1,4 +1,5 @@
 """Module-level documentation generation."""
+
 import logging
 import os
 from typing import Any, Dict, Tuple
@@ -11,6 +12,7 @@ class ModuleDocGenerator:
 
     def __init__(self):
         from generation.claude_client import ClaudeClient
+
         self.claude = ClaudeClient()
 
     def generate(self, filepath: str, ast_result: Dict[str, Any]) -> Tuple[str, int]:

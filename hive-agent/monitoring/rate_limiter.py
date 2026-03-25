@@ -1,4 +1,5 @@
 """GitHub API and Claude API rate limit management."""
+
 import logging
 import time
 from dataclasses import dataclass

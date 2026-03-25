@@ -1,4 +1,5 @@
 """Analyze pull request data."""
+
 import logging
 from dataclasses import dataclass
 from typing import List, Dict, Any
@@ -56,6 +57,7 @@ class PRAnalyzer:
         for pr in merged:
             try:
                 from datetime import datetime
+
                 created = datetime.fromisoformat(pr.created_at.replace("Z", "+00:00"))
                 merged_dt = datetime.fromisoformat(pr.merged_at.replace("Z", "+00:00"))
                 merge_times.append((merged_dt - created).total_seconds() / 3600)

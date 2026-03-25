@@ -1,6 +1,7 @@
 """Doc agent: documentation generation node."""
+
 import logging
-from typing import Any, Dict, List
+from typing import Dict
 
 from agents.state import HiveAgentState
 

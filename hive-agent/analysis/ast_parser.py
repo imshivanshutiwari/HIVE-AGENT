@@ -1,8 +1,9 @@
 """Full Python AST analysis using stdlib ast module."""
+
 import ast
 import logging
 from dataclasses import dataclass, field
-from typing import List, Dict, Optional, Any
+from typing import List, Dict, Optional
 import networkx as nx
 
 logger = logging.getLogger(__name__)
@@ -197,7 +198,7 @@ class PythonASTParser:
         source = ""
         if source_lines:
             start = node.lineno - 1
-            end = (node.end_lineno or node.lineno)
+            end = node.end_lineno or node.lineno
             source = "\n".join(source_lines[start:end])
 
         return FunctionInfo(

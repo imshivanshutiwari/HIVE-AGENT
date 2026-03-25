@@ -1,4 +1,5 @@
 """Security vulnerability scanner using bandit."""
+
 import logging
 import json
 import subprocess
@@ -13,7 +14,7 @@ logger = logging.getLogger(__name__)
 class SecurityIssue:
     filepath: str
     line: int
-    severity: str   # "HIGH", "MEDIUM", "LOW"
+    severity: str  # "HIGH", "MEDIUM", "LOW"
     confidence: str
     test_id: str
     test_name: str
@@ -85,6 +86,7 @@ class SecurityScanner:
     def summarize(self, results: List[SecurityScanResult]) -> Dict[str, Any]:
         all_issues = [i for r in results for i in r.issues]
         from collections import Counter
+
         cwe_counts = Counter(i.cwe for i in all_issues if i.cwe)
         return {
             "total_files_scanned": len(results),

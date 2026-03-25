@@ -1,6 +1,6 @@
 """Analyzer agent: complexity, dependency graph, smells, security."""
+
 import logging
-import os
 from typing import Any, Dict, List
 
 from agents.state import HiveAgentState
@@ -53,14 +53,16 @@ def analyzer_node(state: HiveAgentState) -> HiveAgentState:
         try:
             smells = smell_detector.detect_all(fp)
             for smell in smells:
-                code_smells.append({
-                    "name": smell.name,
-                    "filepath": smell.filepath,
-                    "line": smell.line,
-                    "description": smell.description,
-                    "severity": smell.severity,
-                    "category": smell.category,
-                })
+                code_smells.append(
+                    {
+                        "name": smell.name,
+                        "filepath": smell.filepath,
+                        "line": smell.line,
+                        "description": smell.description,
+                        "severity": smell.severity,
+                        "category": smell.category,
+                    }
+                )
         except Exception as e:
             logger.debug(f"Smell detection failed for {fp}: {e}")
 
@@ -70,20 +72,24 @@ def analyzer_node(state: HiveAgentState) -> HiveAgentState:
         scan_results = security_scanner.scan_directory(repo_path)
         for sr in scan_results:
             for issue in sr.issues:
-                security_issues.append({
-                    "filepath": issue.filepath,
-                    "line": issue.line,
-                    "severity": issue.severity,
-                    "confidence": issue.confidence,
-                    "test_id": issue.test_id,
-                    "test_name": issue.test_name,
-                    "description": issue.description,
-                    "cwe": issue.cwe,
-                })
+                security_issues.append(
+                    {
+                        "filepath": issue.filepath,
+                        "line": issue.line,
+                        "severity": issue.severity,
+                        "confidence": issue.confidence,
+                        "test_id": issue.test_id,
+                        "test_name": issue.test_name,
+                        "description": issue.description,
+                        "cwe": issue.cwe,
+                    }
+                )
     except Exception as e:
         logger.warning(f"[analyzer_node] Security scan failed: {e}")
 
-    trace.append(f"analyzer_node:complete:smells={len(code_smells)},security={len(security_issues)}")
+    trace.append(
+        f"analyzer_node:complete:smells={len(code_smells)},security={len(security_issues)}"
+    )
     return {
         **state,
         "dependency_graph": dep_graph,

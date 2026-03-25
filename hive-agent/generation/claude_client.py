@@ -1,4 +1,5 @@
 """Claude claude-sonnet-4-6 client with tool_use + streaming."""
+
 import logging
 import os
 from dataclasses import dataclass
@@ -35,6 +36,7 @@ class ClaudeClient:
 
     def __init__(self):
         import anthropic
+
         self.client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY", ""))
         self.total_tokens = TokenUsage()
 
@@ -61,9 +63,7 @@ class ClaudeClient:
 
             # Check stop reason
             if response.stop_reason == "end_turn":
-                text = "".join(
-                    block.text for block in response.content if hasattr(block, "text")
-                )
+                text = "".join(block.text for block in response.content if hasattr(block, "text"))
                 return text, total_tokens
 
             if response.stop_reason == "tool_use":
@@ -72,20 +72,20 @@ class ClaudeClient:
                 for block in response.content:
                     if block.type == "tool_use":
                         # Simulate tool result
-                        tool_results.append({
-                            "type": "tool_result",
-                            "tool_use_id": block.id,
-                            "content": f"Tool {block.name} executed successfully.",
-                        })
+                        tool_results.append(
+                            {
+                                "type": "tool_result",
+                                "tool_use_id": block.id,
+                                "content": f"Tool {block.name} executed successfully.",
+                            }
+                        )
                 messages.append({"role": "assistant", "content": response.content})
                 messages.append({"role": "user", "content": tool_results})
             else:
                 break
 
         # Fallback: extract text from last response
-        text = "".join(
-            block.text for block in response.content if hasattr(block, "text")
-        )
+        text = "".join(block.text for block in response.content if hasattr(block, "text"))
         return text, total_tokens
 
     def generate(self, prompt: str, system: Optional[str] = None) -> Tuple[str, int]:

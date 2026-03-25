@@ -1,10 +1,10 @@
 """NetworkX directed dependency graph with PageRank, coupling metrics."""
+
 import ast
 import logging
 import os
-from dataclasses import dataclass, field
-from pathlib import Path
-from typing import List, Dict, Tuple, Optional
+from dataclasses import dataclass
+from typing import List, Dict, Optional
 
 import networkx as nx
 
@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 class CouplingMetrics:
     afferent_coupling: int = 0  # Ca: how many modules depend on this
     efferent_coupling: int = 0  # Ce: how many modules this depends on
-    instability: float = 0.0   # Ce / (Ca + Ce)
+    instability: float = 0.0  # Ce / (Ca + Ce)
 
 
 class DependencyGraphBuilder:
@@ -129,11 +129,7 @@ class DependencyGraphBuilder:
         return metrics
 
     def find_god_modules(self, graph: nx.DiGraph, threshold: int = 10) -> List[str]:
-        return [
-            node
-            for node in graph.nodes()
-            if graph.out_degree(node) > threshold
-        ]
+        return [node for node in graph.nodes() if graph.out_degree(node) > threshold]
 
     def export_to_cytoscape(self, graph: nx.DiGraph) -> List[Dict]:
         elements = []

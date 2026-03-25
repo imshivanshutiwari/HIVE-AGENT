@@ -1,6 +1,7 @@
 """Evaluator agent: BERTScore + ROUGE + coverage evaluation."""
+
 import logging
-from typing import Any, Dict, List
+from typing import Dict
 
 from agents.state import HiveAgentState
 
@@ -44,7 +45,9 @@ def evaluator_node(state: HiveAgentState) -> HiveAgentState:
     if generated_list and reference_list:
         try:
             bert_results = evaluator.compute_bertscore(generated_list[:10], reference_list[:10])
-            bertscore_f1 = float(bert_results.get("f1", [0.0])[0]) if bert_results.get("f1") else 0.0
+            bertscore_f1 = (
+                float(bert_results.get("f1", [0.0])[0]) if bert_results.get("f1") else 0.0
+            )
         except Exception as e:
             logger.warning(f"[evaluator_node] BERTScore failed: {e}")
 

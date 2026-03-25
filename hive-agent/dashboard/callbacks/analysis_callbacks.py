@@ -1,6 +1,6 @@
 """Analysis-related Dash callbacks."""
+
 import logging
-from typing import Any, Dict, Optional
 
 import requests as http_requests
 from dash import Input, Output, State, no_update
@@ -26,7 +26,9 @@ def register_callbacks(app):
         if not repo_url:
             raise PreventUpdate
         try:
-            resp = http_requests.post(f"{API_BASE}/analyze", json={"repo_url": repo_url}, timeout=10)
+            resp = http_requests.post(
+                f"{API_BASE}/analyze", json={"repo_url": repo_url}, timeout=10
+            )
             data = resp.json()
             job_id = data.get("job_id", "")
             return job_id, [f"[HIVE-AGENT] Analysis started: job_id={job_id}"], False

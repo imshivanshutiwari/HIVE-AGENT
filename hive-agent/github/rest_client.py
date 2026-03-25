@@ -1,4 +1,5 @@
 """GitHub REST API v3 client with full rate limit handling."""
+
 import time
 import logging
 from typing import List, Optional, Dict, Any

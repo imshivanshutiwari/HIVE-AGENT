@@ -1,8 +1,9 @@
 """Full evaluation pipeline benchmark runner."""
+
 import json
 import logging
 import os
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass
 from typing import Any, Dict, List
 
 logger = logging.getLogger(__name__)
@@ -33,6 +34,7 @@ class BenchmarkRunner:
         from evaluation.doc_evaluator import DocumentationEvaluator
         from evaluation.coverage_analyzer import CoverageAnalyzer
         from evaluation.quality_rubric import QualityRubric
+
         self.evaluator = DocumentationEvaluator()
         self.coverage = CoverageAnalyzer()
         self.rubric = QualityRubric()
@@ -87,6 +89,7 @@ class BenchmarkRunner:
 
     def run_all(self, target_repos: List[str], output_path: str = "results/benchmark.json"):
         from agents.graph import HiveAgentGraph
+
         graph = HiveAgentGraph()
         all_results = []
 

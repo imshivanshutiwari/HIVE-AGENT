@@ -1,4 +1,5 @@
 """Review agent: code review and suggestions."""
+
 import logging
 from typing import Any, Dict, List
 
@@ -10,8 +11,8 @@ logger = logging.getLogger(__name__)
 def review_node(state: HiveAgentState) -> HiveAgentState:
     """Review high-complexity functions and generate inline comments."""
     ast_results = state.get("ast_results", {})
-    complexity_scores = state.get("complexity_scores", {})
-    code_smells = state.get("code_smells", [])
+    complexity_scores = state.get("complexity_scores", {})  # noqa: F841
+    code_smells = state.get("code_smells", [])  # noqa: F841
     trace = list(state.get("pipeline_trace", []))
     trace.append("review_node:start")
     logger.info("[review_node] Reviewing high-complexity functions")
@@ -44,13 +45,15 @@ def review_node(state: HiveAgentState) -> HiveAgentState:
             )
             result_text, tokens = claude.generate_with_tools(prompt, TOOLS_REVIEW)
             tokens_used += tokens
-            review_comments.append({
-                "filepath": filepath,
-                "function_name": func.get("name", ""),
-                "complexity": func.get("cyclomatic_complexity", 0),
-                "review": result_text,
-                "lineno": func.get("lineno", 0),
-            })
+            review_comments.append(
+                {
+                    "filepath": filepath,
+                    "function_name": func.get("name", ""),
+                    "complexity": func.get("cyclomatic_complexity", 0),
+                    "review": result_text,
+                    "lineno": func.get("lineno", 0),
+                }
+            )
         except Exception as e:
             logger.warning(f"[review_node] Review failed for {func.get('name', '?')}: {e}")
 

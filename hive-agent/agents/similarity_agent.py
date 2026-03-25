@@ -1,6 +1,7 @@
 """Similarity agent: CodeBERT embeddings, clone detection, clustering."""
+
 import logging
-from typing import Any, Dict, List, Tuple
+from typing import List, Tuple
 
 from agents.state import HiveAgentState
 
@@ -52,7 +53,9 @@ def similarity_node(state: HiveAgentState) -> HiveAgentState:
     clusters = []
     try:
         sample = functions[:200]
-        cluster_results = similarity_engine.cluster_functions(sample, n_clusters=min(20, len(sample)))
+        cluster_results = similarity_engine.cluster_functions(
+            sample, n_clusters=min(20, len(sample))
+        )
         clusters = [
             {
                 "cluster_id": c.cluster_id,
@@ -72,15 +75,17 @@ def similarity_node(state: HiveAgentState) -> HiveAgentState:
         if filepath.endswith(".py"):
             try:
                 results = dead_code_finder.find_dead_code(filepath)
-                dead_code.extend([
-                    {
-                        "filepath": r.filepath,
-                        "function_name": r.function_name,
-                        "lineno": r.lineno,
-                        "reason": r.reason,
-                    }
-                    for r in results
-                ])
+                dead_code.extend(
+                    [
+                        {
+                            "filepath": r.filepath,
+                            "function_name": r.function_name,
+                            "lineno": r.lineno,
+                            "reason": r.reason,
+                        }
+                        for r in results
+                    ]
+                )
             except Exception as e:
                 logger.debug(f"Dead code finder failed for {filepath}: {e}")
 
@@ -89,7 +94,8 @@ def similarity_node(state: HiveAgentState) -> HiveAgentState:
         **state,
         "similar_clusters": clusters,
         "pipeline_trace": trace,
-        "code_smells": list(state.get("code_smells", [])) + [
+        "code_smells": list(state.get("code_smells", []))
+        + [
             {
                 "name": f"Dead code: {d['function_name']}",
                 "filepath": d["filepath"],

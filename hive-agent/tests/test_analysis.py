@@ -1,12 +1,11 @@
 """Tests for code analysis modules."""
+
 import ast
 import sys
-import textwrap
 from pathlib import Path
 
 import networkx as nx
 import numpy as np
-import pytest
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
@@ -15,6 +14,7 @@ class TestPythonASTParser:
     def test_ast_parses_real_file(self, real_python_file):
         """Parse a real Python file and verify functions are found."""
         from analysis.ast_parser import PythonASTParser
+
         parser = PythonASTParser()
         result = parser.parse_file(real_python_file)
         assert result.parse_error is None
@@ -25,6 +25,7 @@ class TestPythonASTParser:
     def test_cyclomatic_complexity_formula(self):
         """Test that cyclomatic complexity matches expected value."""
         from analysis.ast_parser import PythonASTParser
+
         parser = PythonASTParser()
         # Simple function: CC = 1
         simple = ast.parse("def foo():\n    return 1").body[0]
@@ -39,6 +40,7 @@ class TestPythonASTParser:
     def test_extract_imports(self, real_python_file):
         """Test import extraction from real file."""
         from analysis.ast_parser import PythonASTParser
+
         parser = PythonASTParser()
         result = parser.parse_file(real_python_file)
         import_modules = [i.module for i in result.imports]
@@ -47,6 +49,7 @@ class TestPythonASTParser:
     def test_function_info_fields(self, real_python_file):
         """Test FunctionInfo has all required fields."""
         from analysis.ast_parser import PythonASTParser
+
         parser = PythonASTParser()
         result = parser.parse_file(real_python_file)
         assert len(result.functions) > 0
@@ -60,6 +63,7 @@ class TestPythonASTParser:
     def test_class_extraction(self, real_python_file):
         """Test class extraction from real file."""
         from analysis.ast_parser import PythonASTParser
+
         parser = PythonASTParser()
         result = parser.parse_file(real_python_file)
         assert len(result.classes) > 0
@@ -70,6 +74,7 @@ class TestPythonASTParser:
     def test_call_graph_is_digraph(self, real_python_file):
         """Test that call graph is a NetworkX DiGraph."""
         from analysis.ast_parser import PythonASTParser
+
         parser = PythonASTParser()
         result = parser.parse_file(real_python_file)
         assert isinstance(result.call_graph, nx.DiGraph)
@@ -83,6 +88,7 @@ class TestDependencyGraph:
     def test_pagerank_sums_to_one(self, dep_graph):
         """Test that PageRank scores sum approximately to 1.0."""
         from analysis.dependency_graph import DependencyGraphBuilder
+
         builder = DependencyGraphBuilder()
         pagerank = builder.compute_pagerank(dep_graph)
         if pagerank:
@@ -92,6 +98,7 @@ class TestDependencyGraph:
     def test_coupling_metrics_exist(self, dep_graph):
         """Test that coupling metrics are computed for all nodes."""
         from analysis.dependency_graph import DependencyGraphBuilder
+
         builder = DependencyGraphBuilder()
         metrics = builder.compute_coupling_metrics(dep_graph)
         for node in dep_graph.nodes():
@@ -102,6 +109,7 @@ class TestDependencyGraph:
     def test_cytoscape_export_format(self, dep_graph):
         """Test that Cytoscape export has correct format."""
         from analysis.dependency_graph import DependencyGraphBuilder
+
         builder = DependencyGraphBuilder()
         elements = builder.export_to_cytoscape(dep_graph)
         assert isinstance(elements, list)
@@ -115,6 +123,7 @@ class TestCodeSimilarityEngine:
     def test_codebert_embedding_shape(self):
         """Test that CodeBERT embedding returns 768-dim vector."""
         from analysis.similarity_engine import CodeSimilarityEngine
+
         engine = CodeSimilarityEngine()
         emb = engine.embed_function("def foo(): pass")
         assert isinstance(emb, np.ndarray)
@@ -123,6 +132,7 @@ class TestCodeSimilarityEngine:
     def test_cosine_similarity_range(self):
         """Test that cosine similarity is in [-1, 1]."""
         from analysis.similarity_engine import CodeSimilarityEngine
+
         engine = CodeSimilarityEngine()
         a = engine.embed_function("def add(x, y): return x + y")
         b = engine.embed_function("def multiply(x, y): return x * y")
@@ -132,6 +142,7 @@ class TestCodeSimilarityEngine:
     def test_identical_code_high_similarity(self):
         """Test that identical code has high similarity."""
         from analysis.similarity_engine import CodeSimilarityEngine
+
         engine = CodeSimilarityEngine()
         code = "def foo(x):\n    return x * 2\n"
         a = engine.embed_function(code)

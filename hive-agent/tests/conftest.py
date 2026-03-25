@@ -1,10 +1,9 @@
 """pytest fixtures for HIVE-AGENT tests."""
-import os
+
 import sys
 import textwrap
 from pathlib import Path
-from typing import Any, Dict
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
 
 import pytest
 
@@ -89,6 +88,7 @@ def real_python_file(tmp_path):
 def ast_result(real_python_file):
     """Parsed AST result from real Python file."""
     from analysis.ast_parser import PythonASTParser
+
     parser = PythonASTParser()
     return parser.parse_file(real_python_file)
 
@@ -96,7 +96,7 @@ def ast_result(real_python_file):
 @pytest.fixture
 def dep_graph(tmp_path):
     """Build a real NetworkX dependency graph from sample files."""
-    import networkx as nx
+
     # Create a mini repo structure
     (tmp_path / "mymod").mkdir()
     (tmp_path / "mymod" / "__init__.py").write_text("")
@@ -104,6 +104,7 @@ def dep_graph(tmp_path):
     (tmp_path / "mymod" / "utils.py").write_text("from mymod import core\n")
 
     from analysis.dependency_graph import DependencyGraphBuilder
+
     builder = DependencyGraphBuilder()
     return builder.build_graph(str(tmp_path))
 
@@ -113,7 +114,8 @@ def mock_claude_client():
     """Mock Claude client to avoid API calls in tests."""
     mock = MagicMock()
     mock.generate.return_value = (
-        "Summary of function.\n\nArgs:\n    x: First param.\n\nReturns:\n    int: Result.\n\nExample:\n    >>> func(1)\n",
+        "Summary of function.\n\nArgs:\n    x: First param.\n\n"
+        "Returns:\n    int: Result.\n\nExample:\n    >>> func(1)\n",
         150,
     )
     mock.generate_with_tools.return_value = (

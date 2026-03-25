@@ -1,4 +1,5 @@
 """GitHub GraphQL API v4 client."""
+
 import logging
 from dataclasses import dataclass, field
 from typing import List, Optional, Dict, Any
@@ -99,10 +100,7 @@ class GitHubGraphQLClient:
             watchers=r.get("watchers", {}).get("totalCount", 0),
             disk_usage=r.get("diskUsage", 0),
             primary_language=(r.get("primaryLanguage") or {}).get("name", ""),
-            topics=[
-                n["topic"]["name"]
-                for n in r.get("repositoryTopics", {}).get("nodes", [])
-            ],
+            topics=[n["topic"]["name"] for n in r.get("repositoryTopics", {}).get("nodes", [])],
             license=(r.get("licenseInfo") or {}).get("name", ""),
             total_commits=(
                 (r.get("defaultBranchRef") or {})

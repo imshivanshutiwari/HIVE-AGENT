@@ -1,4 +1,5 @@
 """FastAPI server for HIVE-AGENT."""
+
 import logging
 import os
 import uuid
@@ -10,9 +11,12 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
 from api.schemas import (
-    AnalyzeRequest, AnalyzeResponse,
-    GenerateRequest, GenerateResponse,
-    HealthResponse, JobStatusResponse,
+    AnalyzeRequest,
+    AnalyzeResponse,
+    GenerateRequest,
+    GenerateResponse,
+    HealthResponse,
+    JobStatusResponse,
 )
 
 logger = logging.getLogger(__name__)
@@ -42,6 +46,7 @@ _executor = ThreadPoolExecutor(max_workers=4)
 def _run_pipeline_job(job_id: str, repo_url: str) -> None:
     """Run pipeline in background thread."""
     from pipeline.main import run_pipeline
+
     _jobs[job_id]["status"] = "running"
     _jobs[job_id]["progress"] = 0.1
     try:
@@ -124,6 +129,7 @@ async def generate_doc(request: GenerateRequest):
     if not os.environ.get("ANTHROPIC_API_KEY"):
         raise HTTPException(status_code=503, detail="ANTHROPIC_API_KEY not configured")
     from generation.claude_client import ClaudeClient
+
     claude = ClaudeClient()
     prompt = (
         f"Generate {request.doc_type} documentation for {request.function_name or 'the module'} "

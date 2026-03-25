@@ -1,10 +1,8 @@
 """Tests for GitHub API clients and analyzers."""
-import os
+
 import sys
 from pathlib import Path
 from unittest.mock import MagicMock, patch
-
-import pytest
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
@@ -13,6 +11,7 @@ class TestGitHubRESTClient:
     def test_rest_client_initialization(self):
         """Test REST client initializes with correct headers."""
         from github.rest_client import GitHubRESTClient
+
         client = GitHubRESTClient("test_token")
         assert "Authorization" in client.headers
         assert "token test_token" in client.headers["Authorization"]
@@ -21,9 +20,13 @@ class TestGitHubRESTClient:
         """Test rate limit handler does not sleep when remaining > 0."""
         import time
         from github.rest_client import GitHubRESTClient
+
         client = GitHubRESTClient("test")
         mock_response = MagicMock()
-        mock_response.headers = {"X-RateLimit-Remaining": "100", "X-RateLimit-Reset": str(int(time.time()) + 60)}
+        mock_response.headers = {
+            "X-RateLimit-Remaining": "100",
+            "X-RateLimit-Reset": str(int(time.time()) + 60),
+        }
         start = time.time()
         client.handle_rate_limit(mock_response)
         elapsed = time.time() - start
@@ -32,6 +35,7 @@ class TestGitHubRESTClient:
     def test_get_repo_constructs_correct_url(self):
         """Test get_repo makes request to correct endpoint."""
         from github.rest_client import GitHubRESTClient
+
         client = GitHubRESTClient("test")
         mock_response = MagicMock()
         mock_response.json.return_value = {"name": "requests", "stargazers_count": 1000}
@@ -47,6 +51,7 @@ class TestGitHubRESTClient:
     def test_get_commits_returns_list(self):
         """Test get_commits returns list of commit dicts."""
         from github.rest_client import GitHubRESTClient
+
         client = GitHubRESTClient("test")
         mock_response = MagicMock()
         mock_response.json.return_value = [{"sha": "abc123", "commit": {"message": "fix: bug"}}]
@@ -61,6 +66,7 @@ class TestGitHubRESTClient:
     def test_commit_analyzer_patterns(self):
         """Test CommitAnalyzer.analyze_commit_patterns returns correct keys."""
         from github.commit_analyzer import CommitAnalyzer, CommitStats
+
         mock_rest = MagicMock()
         analyzer = CommitAnalyzer(mock_rest)
         commits = [
