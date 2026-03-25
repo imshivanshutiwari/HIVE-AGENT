@@ -1,0 +1,1209 @@
+
+╔══════════════════════════════════════════════════════════════════════╗
+║     GITHUB COPILOT — IRON PROTOCOL · HIVE-AGENT                       ║
+║                                                                        ║
+║  YOU ARE A PRINCIPAL ENGINEER + AI SYSTEMS ARCHITECT.                ║
+║  BUILD AS IF THIS SHIPS TO PRODUCTION AT A REAL AI COMPANY.          ║
+║                                                                        ║
+║  HARD FAILURES — ABSOLUTE ZERO TOLERANCE:                             ║
+║  ✗ stub / TODO / pass / NotImplemented / placeholder anywhere         ║
+║  ✗ mock / fake / hardcoded repo data used as real data                ║
+║  ✗ terminal-only output — everything in browser dashboard             ║
+║  ✗ simplified algorithm — maximum complexity always                   ║
+║  ✗ fewer than 22 visualizations in dashboard                          ║
+║  ✗ agent implementing differently than what prompt says               ║
+║  ✗ downgrading any specified tool/technique/algo/method               ║
+║  ✗ stopping before final checklist is 100% green                      ║
+╚══════════════════════════════════════════════════════════════════════╝
+
+═══════════════════════════════════════════
+SECTION 0 — ABSOLUTE IRON RULES
+═══════════════════════════════════════════
+
+RULE 1 — BUILD EXACTLY WHAT IS WRITTEN. NO CREATIVITY.
+  Every line of this prompt is a direct order.
+  Copilot CANNOT:
+    - Simplify any component
+    - Replace any specified library with "easier" alternative
+    - Skip any specified algorithm
+    - Use simple string matching instead of AST parsing
+    - Use basic summarization instead of structured analysis
+  Prompt = Law. Every deviation = HARD FAILURE.
+
+RULE 2 — MAXIMUM TECH COMPLEXITY. NO DOWNGRADE.
+  ✦ Code analysis: AST parsing (Python ast + tree-sitter)
+                   NOT regex or simple string search
+  ✦ LangGraph: 8-node StateGraph with conditional edges
+               NOT linear sequential chain
+  ✦ Claude API: claude-sonnet-4-6 with tool_use + streaming
+                NOT claude-haiku or non-streaming
+  ✦ Embeddings: CodeBERT + GraphCodeBERT for code similarity
+                NOT basic TF-IDF
+  ✦ Dependency graph: NetworkX directed graph + PageRank
+                      NOT flat list of imports
+  ✦ Doc generation: Multi-level (function/class/module/repo)
+                    NOT single-level README only
+  ✦ GitHub: Full GraphQL API + REST API (not just REST)
+            Real commit history + PR data + issue tracking
+  ✦ Testing: Hypothesis property-based testing + pytest
+             NOT only basic unit tests
+  ✦ Evaluation: BERTScore + ROUGE + human eval rubric
+                NOT manual inspection only
+  Any downgrade = HARD FAILURE
+
+RULE 3 — REAL DATA ONLY. ZERO EXCEPTIONS.
+  All data fetched via real GitHub API programmatically.
+  BANNED: hardcoded file paths, fake commit histories,
+          placeholder code snippets, mock PR data,
+          example.py with lorem ipsum comments
+
+RULE 4 — FILE CREATION TOOL ONLY
+  EVERY file via direct file creation tool.
+  NEVER terminal echo/cat/printf for file content.
+  Terminal ONLY: pip install, python verify, pytest, git
+
+RULE 5 — VERIFY BEFORE NEXT
+  python filename.py → exit 0 before next file.
+
+RULE 6 — NO TERMINAL RUNS
+  python dashboard/app.py → browser opens localhost:8050 AUTO
+  import webbrowser; webbrowser.open("http://localhost:8050")
+  ALL output in Dash UI. Never print-only.
+
+RULE 7 — 30 TESTS ALL PASS
+  pytest tests/ -v → 30/30 PASSED
+  No assert True. Real objects. Real GitHub data. Real assertions.
+
+RULE 8 — FULL REAL INTEGRATION
+  pipeline/main.py MUST import from ALL:
+    github/ analysis/ agents/ generation/
+    evaluation/ monitoring/ dashboard/
+  Fake integration = FAILED.
+
+RULE 9 — EXACT COMMIT
+  git commit -m "feat: complete HIVE-AGENT
+
+   - LangGraph 8-node autonomous codebase analysis graph
+   - Claude claude-sonnet-4-6 with tool_use + streaming
+   - AST parsing: Python ast + tree-sitter (10 languages)
+   - CodeBERT + GraphCodeBERT code similarity embeddings
+   - NetworkX dependency graph + PageRank complexity scoring
+   - Multi-level doc generation: function/class/module/repo
+   - GitHub GraphQL + REST API: commits/PRs/issues/contributors
+   - Hypothesis property-based testing
+   - BERTScore + ROUGE documentation quality evaluation
+   - Real repos: top-50 GitHub Python/JS/Go/Rust repos
+   - 22 visualizations in Dev Intelligence Ops Dash UI
+   - Zero fake data, browser auto-opens on make run
+   - 30 pytest tests passing + CI/CD green"
+  git push origin main
+
+═══════════════════════════════════════════
+SECTION 1 — PROJECT IDENTITY
+═══════════════════════════════════════════
+
+Project  : HIVE-AGENT
+Subtitle : Autonomous Codebase Analyst and Documentation
+           Generator using Claude API Tool-Use,
+           LangGraph Multi-Agent Orchestration and
+           Real-Time GitHub Repository Intelligence
+Language : Python 3.11
+Repo     : hive-agent
+UI       : Plotly Dash Dev Intelligence Ops Center
+           (dark blue theme)
+LLM      : Anthropic claude-sonnet-4-6 (tool_use + streaming)
+Analysis : Python ast + tree-sitter + CodeBERT
+
+═══════════════════════════════════════════
+SECTION 2 — EXACT FOLDER STRUCTURE (82 FILES)
+═══════════════════════════════════════════
+
+hive-agent/
+├── README.md
+├── requirements.txt
+├── setup.py
+├── Makefile
+├── .env.example
+├── .gitignore
+│
+├── configs/
+│   ├── agent_config.yaml        ← LangGraph + Claude settings
+│   ├── analysis_config.yaml     ← AST + code analysis params
+│   ├── github_config.yaml       ← API rate limits + targets
+│   ├── generation_config.yaml   ← doc generation settings
+│   └── evaluation_config.yaml   ← BERTScore + ROUGE thresholds
+│
+├── github/
+│   ├── __init__.py
+│   ├── rest_client.py           ← GitHub REST API v3 client
+│   ├── graphql_client.py        ← GitHub GraphQL API client
+│   ├── repo_fetcher.py          ← Clone + fetch real repos
+│   ├── commit_analyzer.py       ← Commit history analysis
+│   ├── pr_analyzer.py           ← Pull request data
+│   ├── issue_analyzer.py        ← Issue tracking data
+│   └── contributor_analyzer.py  ← Contributor statistics
+│
+├── analysis/
+│   ├── __init__.py
+│   ├── ast_parser.py            ← Python ast full parser
+│   ├── treesitter_parser.py     ← tree-sitter 10 languages
+│   ├── dependency_graph.py      ← NetworkX dep graph builder
+│   ├── complexity_scorer.py     ← Cyclomatic + cognitive complexity
+│   ├── code_smell_detector.py   ← Anti-pattern detection
+│   ├── similarity_engine.py     ← CodeBERT + GraphCodeBERT
+│   ├── dead_code_finder.py      ← Unreachable code detection
+│   └── security_scanner.py      ← Vulnerability pattern scan
+│
+├── agents/
+│   ├── __init__.py
+│   ├── state.py                 ← HiveAgentState TypedDict
+│   ├── tools.py                 ← All @tool functions (Claude)
+│   ├── fetcher_agent.py         ← GitHub data collection
+│   ├── parser_agent.py          ← AST + tree-sitter parsing
+│   ├── analyzer_agent.py        ← Complexity + dependency
+│   ├── similarity_agent.py      ← Code similarity + clusters
+│   ├── doc_agent.py             ← Documentation generation
+│   ├── review_agent.py          ← Code review + suggestions
+│   ├── test_agent.py            ← Auto test generation
+│   ├── evaluator_agent.py       ← Doc quality evaluation
+│   └── graph.py                 ← LangGraph StateGraph 8 nodes
+│
+├── generation/
+│   ├── __init__.py
+│   ├── claude_client.py         ← Claude claude-sonnet-4-6 client
+│   ├── function_docgen.py       ← Per-function documentation
+│   ├── class_docgen.py          ← Per-class documentation
+│   ├── module_docgen.py         ← Module-level documentation
+│   ├── repo_docgen.py           ← Full repo README generation
+│   ├── test_generator.py        ← pytest test auto-generation
+│   └── changelog_generator.py  ← Changelog from commits
+│
+├── evaluation/
+│   ├── __init__.py
+│   ├── doc_evaluator.py         ← BERTScore + ROUGE
+│   ├── coverage_analyzer.py     ← Doc coverage per codebase
+│   ├── quality_rubric.py        ← Structured quality scoring
+│   └── benchmark_runner.py      ← Full evaluation pipeline
+│
+├── monitoring/
+│   ├── __init__.py
+│   ├── usage_tracker.py         ← Claude API token usage
+│   ├── rate_limiter.py          ← GitHub API rate management
+│   ├── progress_tracker.py      ← Real-time analysis progress
+│   └── alert_manager.py         ← Threshold-based alerts
+│
+├── pipeline/
+│   ├── __init__.py
+│   └── main.py                  ← End-to-end entry point
+│
+├── api/
+│   ├── __init__.py
+│   ├── server.py                ← FastAPI server
+│   ├── routes/
+│   │   ├── analyze.py           ← /analyze endpoint
+│   │   ├── generate.py          ← /generate endpoint
+│   │   └── status.py            ← /status endpoint
+│   └── schemas.py               ← Pydantic models
+│
+├── dashboard/
+│   ├── __init__.py
+│   ├── app.py                   ← Opens browser AUTO
+│   ├── theme.py                 ← Blue Dev Ops colors
+│   ├── pages/
+│   │   ├── __init__.py
+│   │   ├── repo_ops.py          ← Main page VIZ 01-07
+│   │   ├── code_intel.py        ← Code analysis 08-13
+│   │   ├── agent_flow.py        ← LangGraph monitor 14-17
+│   │   ├── doc_quality.py       ← Doc evaluation 18-20
+│   │   └── repo_health.py       ← Repo health 21-22
+│   └── callbacks/
+│       ├── __init__.py
+│       ├── analysis_callbacks.py
+│       └── generation_callbacks.py
+│
+├── utils/
+│   ├── __init__.py
+│   ├── logger.py
+│   ├── config_loader.py
+│   ├── checkpoint.py
+│   └── seed.py
+│
+├── tests/
+│   ├── conftest.py
+│   ├── test_github.py
+│   ├── test_analysis.py
+│   ├── test_agents.py
+│   ├── test_generation.py
+│   ├── test_evaluation.py
+│   └── test_property_based.py   ← Hypothesis tests
+│
+├── notebooks/
+│   ├── 01_repo_analysis_exploration.ipynb
+│   ├── 02_agent_decisions_analysis.ipynb
+│   └── 03_doc_quality_evaluation.ipynb
+│
+├── assets/
+│   ├── architecture_diagram.png
+│   └── results/
+│
+└── .github/
+    └── workflows/
+        ├── ci.yml
+        └── lint.yml
+
+═══════════════════════════════════════════
+SECTION 3 — REQUIREMENTS (EXACT PINS)
+═══════════════════════════════════════════
+
+anthropic==0.25.1
+langchain==0.1.20
+langgraph==0.0.55
+langchain-anthropic==0.1.11
+PyGithub==2.3.0
+tree-sitter==0.22.3
+tree-sitter-python==0.21.0
+tree-sitter-javascript==0.21.0
+tree-sitter-typescript==0.21.0
+tree-sitter-go==0.21.0
+tree-sitter-rust==0.21.0
+tree-sitter-java==0.21.0
+tree-sitter-cpp==0.22.0
+tree-sitter-c==0.21.0
+tree-sitter-ruby==0.21.0
+tree-sitter-php==0.22.0
+transformers==4.40.0
+torch==2.3.0
+networkx==3.3
+radon==6.0.1
+pylint==3.2.0
+bandit==1.7.8
+fastapi==0.111.0
+uvicorn==0.29.0
+plotly==5.22.0
+dash==2.17.0
+dash-cytoscape==0.3.0
+dash-bootstrap-components==1.6.0
+wandb==0.16.6
+bert-score==0.3.13
+rouge-score==0.1.2
+evaluate==0.4.2
+hypothesis==6.100.0
+numpy==1.26.4
+scipy==1.13.0
+pandas==2.2.2
+tqdm==4.66.4
+pydantic==2.7.1
+pyyaml==6.0.1
+python-dotenv==1.0.1
+requests==2.31.0
+aiohttp==3.9.5
+gitpython==3.1.43
+pytest==8.2.0
+black==24.4.2
+flake8==7.0.0
+jupyter==1.0.0
+pygments==2.18.0
+webbrowser
+
+═══════════════════════════════════════════
+SECTION 4 — REAL DATA SOURCES
+═══════════════════════════════════════════
+
+── github/rest_client.py ── REAL DATA
+class GitHubRESTClient:
+  REAL GitHub REST API v3.
+  Base: https://api.github.com/
+
+  methods:
+    __init__(token: str):
+      self.headers = {
+        'Authorization': f'token {token}',
+        'Accept': 'application/vnd.github.v3+json'
+      }
+    get_repo(owner, repo) -> dict
+      GET /repos/{owner}/{repo}
+    get_contents(owner, repo, path='') -> List[dict]
+      GET /repos/{owner}/{repo}/contents/{path}
+    get_commits(owner, repo, n=100) -> List[dict]
+      GET /repos/{owner}/{repo}/commits?per_page=100
+    get_pulls(owner, repo, state='all') -> List[dict]
+      GET /repos/{owner}/{repo}/pulls
+    get_issues(owner, repo) -> List[dict]
+      GET /repos/{owner}/{repo}/issues
+    get_languages(owner, repo) -> dict
+      GET /repos/{owner}/{repo}/languages
+    handle_rate_limit(response):
+      Check X-RateLimit-Remaining header
+      Sleep until X-RateLimit-Reset if needed
+
+── github/graphql_client.py ── REAL DATA
+class GitHubGraphQLClient:
+  REAL GitHub GraphQL API v4.
+  Endpoint: https://api.github.com/graphql
+
+  methods:
+    query(gql_query: str,
+          variables: dict = None) -> dict
+      POST with Authorization header
+      Returns: response['data']
+
+    get_repo_stats(owner, repo) -> RepoStats
+      Query: stars, forks, watchers, diskUsage,
+             primaryLanguage, topics, licenseInfo,
+             defaultBranchRef.target.history.totalCount
+
+    get_contributor_graph(owner, repo) -> List[Contributor]
+      Query: mentionableUsers with contributionCount
+
+    get_pr_reviews(owner, repo) -> List[PRReview]
+      Query: pullRequests → reviews → comments
+
+    get_code_frequency(owner, repo) -> List[WeeklyStats]
+      Query: defaultBranch commit history with additions/deletions
+
+── github/repo_fetcher.py ── REAL DATA
+class RepoFetcher:
+  Fetches REAL repos from GitHub.
+
+  TARGET_REPOS (top open-source):
+    Python: ['psf/requests', 'pallets/flask',
+             'django/django', 'scikit-learn/scikit-learn',
+             'pytorch/pytorch', 'huggingface/transformers',
+             'langchain-ai/langchain', 'tiangolo/fastapi',
+             'numpy/numpy', 'pandas-dev/pandas']
+    JavaScript: ['facebook/react', 'vuejs/vue',
+                 'expressjs/express', 'axios/axios']
+    Go: ['golang/go', 'gin-gonic/gin']
+    Rust: ['rust-lang/rust', 'tokio-rs/tokio']
+    Other: ['microsoft/vscode', 'torvalds/linux']
+
+  methods:
+    clone_repo(owner, repo,
+               dest='data/repos/') -> str
+      git.Repo.clone_from(github_url, dest_path)
+      Returns: local path
+
+    fetch_all_files(repo_path: str,
+                    extensions=['.py','.js','.go','.rs'])
+      → List[CodeFile]
+      CodeFile: {path, content, language, size_bytes}
+
+    fetch_repo_metadata(owner, repo) -> RepoMetadata
+      REST + GraphQL combined
+
+═══════════════════════════════════════════
+SECTION 5 — MAX COMPLEXITY SPECS
+═══════════════════════════════════════════
+
+── analysis/ast_parser.py ──
+class PythonASTParser:
+  Full Python AST analysis using stdlib ast module.
+
+  methods:
+    parse_file(filepath: str) -> ASTResult
+      tree = ast.parse(open(filepath).read())
+      ASTResult: {
+        functions: List[FunctionInfo],
+        classes: List[ClassInfo],
+        imports: List[ImportInfo],
+        globals: List[str],
+        docstrings: Dict[str, str],
+        type_hints: Dict[str, str]
+      }
+
+    extract_function_info(node: ast.FunctionDef) -> FunctionInfo
+      FunctionInfo: {
+        name, args, return_type, decorators,
+        docstring, body_lines, calls_made,
+        raises, yields, is_async,
+        cyclomatic_complexity, cognitive_complexity
+      }
+
+    compute_cyclomatic_complexity(node) -> int
+      Count: if/elif/else/for/while/try/except/
+             with/assert/and/or/ternary
+      M = E - N + 2P (McCabe formula)
+
+    compute_cognitive_complexity(node) -> int
+      SonarSource cognitive complexity algorithm:
+      +1 for each nesting increment
+      +nesting_level for nested structures
+
+    extract_call_graph(tree) -> nx.DiGraph
+      Edges: caller function → called function
+
+── analysis/treesitter_parser.py ──
+class TreeSitterParser:
+  tree-sitter for 10 languages beyond Python.
+
+  Supported: JavaScript, TypeScript, Go, Rust,
+             Java, C++, C, Ruby, PHP, Kotlin
+
+  methods:
+    __init__():
+      self.parsers = {}
+      for lang in SUPPORTED_LANGUAGES:
+        language = Language(f'build/{lang}.so', lang)
+        parser = Parser()
+        parser.set_language(language)
+        self.parsers[lang] = parser
+
+    parse_file(filepath: str,
+               language: str) -> TreeSitterResult
+      Returns: {functions, classes, imports,
+                complexity_estimate, line_count}
+
+    extract_functions(tree, source: bytes) -> List[FunctionNode]
+      Query: (function_declaration) @func
+      Returns: name, params, body, start_line, end_line
+
+    extract_dependencies(tree,
+                         source: bytes) -> List[str]
+      Language-specific import/require/use patterns
+
+    detect_language(filepath: str) -> str
+      Extension + content-based detection
+
+── analysis/dependency_graph.py ──
+class DependencyGraphBuilder:
+  NetworkX directed graph of module dependencies.
+
+  methods:
+    build_graph(repo_path: str) -> nx.DiGraph
+      Nodes: every module/file
+      Edges: A → B means A imports B
+      Node attributes: {language, complexity,
+                        loc, doc_coverage}
+      Edge attributes: {import_type, line_number}
+
+    compute_pagerank(graph) -> Dict[str, float]
+      nx.pagerank(graph, alpha=0.85)
+      High PageRank = most depended-upon module
+
+    find_circular_dependencies(graph) -> List[List[str]]
+      nx.simple_cycles(graph)
+
+    compute_coupling_metrics(graph) -> Dict[str, dict]
+      Per node: {afferent_coupling, efferent_coupling,
+                 instability: Ce/(Ca+Ce)}
+
+    find_god_modules(graph,
+                     threshold=10) -> List[str]
+      Modules with efferent_coupling > threshold
+
+    export_to_cytoscape(graph) -> List[dict]
+      Format for dash-cytoscape visualization
+
+── analysis/similarity_engine.py ──
+class CodeSimilarityEngine:
+  CodeBERT + GraphCodeBERT embeddings.
+
+  methods:
+    __init__():
+      from transformers import AutoModel, AutoTokenizer
+      self.codebert = AutoModel.from_pretrained(
+          "microsoft/codebert-base")
+      self.graphcodebert = AutoModel.from_pretrained(
+          "microsoft/graphcodebert-base")
+      self.tokenizer = AutoTokenizer.from_pretrained(
+          "microsoft/codebert-base")
+
+    embed_function(code: str,
+                   model='codebert') -> np.ndarray
+      tokens = tokenizer(code, max_length=512,
+                         truncation=True, return_tensors='pt')
+      with torch.no_grad():
+        outputs = model(**tokens)
+      Returns: (768,) [CLS] embedding
+
+    find_similar_functions(query_code: str,
+                           codebase: List[CodeFile],
+                           top_k: int = 10) -> List[SimilarFunction]
+      Embed query → cosine similarity vs all functions
+      SimilarFunction: {file, function_name, score, code}
+
+    detect_code_clones(codebase: List[CodeFile],
+                       threshold: float = 0.9) -> List[ClonePair]
+      All-pairs similarity → clusters of clones
+
+    cluster_functions(codebase,
+                      n_clusters: int = 20) -> List[Cluster]
+      KMeans on CodeBERT embeddings
+      Each cluster = group of functionally similar code
+
+── agents/graph.py ── CORE LANGGRAPH 8 NODES
+class HiveAgentGraph:
+  LangGraph StateGraph with 8 nodes + conditional edges.
+
+  HiveAgentState (TypedDict):
+    repo_url: str
+    repo_path: str
+    repo_metadata: RepoMetadata
+    all_files: List[CodeFile]
+    ast_results: Dict[str, ASTResult]
+    dependency_graph: nx.DiGraph
+    complexity_scores: Dict[str, float]
+    code_smells: List[CodeSmell]
+    similar_clusters: List[Cluster]
+    generated_docs: Dict[str, str]
+    generated_tests: Dict[str, str]
+    changelog: str
+    doc_quality_scores: Dict[str, float]
+    review_comments: List[ReviewComment]
+    pipeline_trace: List[str]
+    claude_tokens_used: int
+
+  8 Nodes (ALL FULLY IMPLEMENTED):
+
+  fetcher_node:
+    Input: repo_url
+    Clone repo via GitPython
+    Fetch metadata via REST + GraphQL
+    Collect all code files (10 languages)
+    Tools: clone_repository, fetch_metadata,
+           list_files, get_commit_history
+
+  parser_node:
+    Input: all_files
+    AST parse all Python files
+    tree-sitter parse all other languages
+    Extract: functions, classes, imports, call graphs
+    Tools: parse_python_ast, parse_with_treesitter,
+           extract_imports, build_call_graph
+
+  analyzer_node:
+    Input: ast_results
+    Build dependency graph + PageRank
+    Compute cyclomatic + cognitive complexity
+    Detect code smells + anti-patterns
+    Run Bandit security scan
+    Tools: build_dependency_graph, compute_complexity,
+           detect_smells, run_security_scan
+
+  similarity_node:
+    Input: ast_results + all_files
+    CodeBERT embeddings for all functions
+    Detect code clones (threshold=0.9)
+    Cluster functions by semantic similarity
+    Find dead code via reachability analysis
+    Tools: embed_functions, detect_clones,
+           cluster_code, find_dead_code
+
+  doc_agent_node:
+    Input: ast_results + analyzer results + repo metadata
+    Generate docstrings per function (Claude tool_use)
+    Generate class documentation
+    Generate module-level docs
+    Generate full repo README
+    Streaming: each doc streamed back to dashboard
+    Tools: generate_function_doc, generate_class_doc,
+           generate_module_doc, generate_readme
+
+  review_node:
+    Input: ast_results + complexity + smells
+    Claude reviews each high-complexity function
+    Suggests refactoring improvements
+    Highlights security vulnerabilities
+    Generates inline review comments
+    Tools: review_function, suggest_refactor,
+           flag_security_issue
+
+  test_agent_node:
+    Input: ast_results + function signatures
+    Generate pytest test cases per function
+    Generate property-based Hypothesis tests
+    Generate edge case tests for complex functions
+    Tools: generate_unit_tests, generate_property_tests,
+           generate_integration_tests
+
+  evaluator_node:
+    Input: generated_docs + original code
+    BERTScore: doc quality vs reference
+    ROUGE-L: doc completeness
+    Coverage: % of functions with docs
+    Quality rubric: completeness/accuracy/clarity
+    Tools: compute_bertscore, compute_rouge,
+           measure_coverage, apply_rubric
+
+  Edges:
+    START → fetcher (always)
+    fetcher → parser (on success)
+    fetcher → END (on fetch failure)
+    parser → analyzer (always)
+    parser → similarity (parallel via Send)
+    analyzer → doc_agent (always)
+    analyzer → review (if complexity_issues found)
+    similarity → doc_agent (feeds context)
+    doc_agent → test_agent (always)
+    doc_agent → evaluator (always)
+    review → evaluator (if reviews generated)
+    test_agent → evaluator (feeds generated tests)
+    evaluator → END (always)
+
+── generation/claude_client.py ──
+class ClaudeClient:
+  Anthropic claude-sonnet-4-6 with tool_use + streaming.
+
+  methods:
+    __init__():
+      import anthropic
+      self.client = anthropic.Anthropic(
+          api_key=os.environ["ANTHROPIC_API_KEY"])
+      self.model = "claude-sonnet-4-6"
+
+    generate_with_tools(prompt: str,
+                        tools: List[dict],
+                        system: str = None) -> ToolUseResult
+      response = self.client.messages.create(
+          model=self.model,
+          max_tokens=4096,
+          tools=tools,
+          messages=[{"role":"user","content":prompt}],
+          system=system or DEFAULT_SYSTEM
+      )
+      Handle: tool_use blocks → call tool → continue
+      Returns: final text response
+
+    stream_generate(prompt: str) -> Iterator[str]
+      with self.client.messages.stream(
+          model=self.model,
+          max_tokens=4096,
+          messages=[{"role":"user","content":prompt}]
+      ) as stream:
+          for text in stream.text_stream:
+              yield text
+
+    track_usage(response) -> TokenUsage
+      TokenUsage: {input_tokens, output_tokens,
+                   cache_read_tokens, total_cost_usd}
+
+── generation/function_docgen.py ──
+class FunctionDocGenerator:
+  Generate Google-style docstrings per function.
+
+  methods:
+    generate(func_info: FunctionInfo,
+             context: str = None) -> str
+      Prompt includes:
+        - Function signature + body
+        - Inferred types from AST
+        - Calling context (what calls this function)
+        - Similar documented functions (CodeBERT lookup)
+      Output format: Google-style docstring with:
+        Args: (each parameter explained)
+        Returns: (return value explained)
+        Raises: (exceptions documented)
+        Example: (usage example generated)
+
+    generate_batch(functions: List[FunctionInfo],
+                   max_concurrent: int = 5) -> Dict[str, str]
+      Async batch generation with rate limiting
+      Progress tracking via monitoring/progress_tracker
+
+    improve_existing(func: FunctionInfo,
+                     existing_doc: str) -> str
+      Critique + rewrite poor documentation
+
+── generation/test_generator.py ──
+class TestGenerator:
+  Generate pytest + Hypothesis tests.
+
+  methods:
+    generate_unit_tests(func: FunctionInfo) -> str
+      Claude generates:
+        - Happy path test
+        - Edge case tests (empty/None/boundary)
+        - Error condition tests
+        - Mock external dependencies
+      Output: valid pytest file
+
+    generate_hypothesis_tests(func: FunctionInfo) -> str
+      Claude generates Hypothesis strategies:
+        @given(st.integers(), st.text(), ...)
+        def test_property(arg1, arg2):
+            ...
+      Based on type hints + function behavior
+
+    generate_integration_tests(module: ModuleInfo,
+                                dep_graph) -> str
+      Tests that cover module interaction
+
+    validate_generated_tests(test_code: str) -> bool
+      Attempt to compile + run in sandbox
+      Returns: syntax_valid + import_valid
+
+── evaluation/doc_evaluator.py ──
+class DocumentationEvaluator:
+  BERTScore + ROUGE evaluation.
+
+  methods:
+    compute_bertscore(generated: List[str],
+                      reference: List[str]) -> dict
+      bert_score.score(generated, reference,
+                       lang='en',
+                       model_type='microsoft/deberta-xlarge-mnli')
+      Returns: {precision, recall, f1} per doc
+
+    compute_rouge(generated: str,
+                  reference: str) -> dict
+      rouge_scorer.RougeScorer(['rouge1','rouge2','rougeL'])
+      Returns: {rouge1, rouge2, rougeL} f1 scores
+
+    apply_quality_rubric(doc: str,
+                          func: FunctionInfo) -> RubricScore
+      6-dimension rubric (0-5 each):
+        completeness: all args/returns documented?
+        accuracy: types match actual code?
+        clarity: readable English?
+        examples: has usage examples?
+        edge_cases: corner cases mentioned?
+        consistency: matches codebase style?
+      Total: sum of 6 dimensions / 30
+
+    compute_coverage(repo_path: str) -> CoverageReport
+      % functions with docstrings
+      % classes with docstrings
+      % modules with module-level docs
+      Per-file breakdown
+
+═══════════════════════════════════════════
+SECTION 6 — CONFIGS (EXACT VALUES)
+═══════════════════════════════════════════
+
+agent_config.yaml:
+  llm:
+    model: claude-sonnet-4-6
+    max_tokens: 4096
+    temperature: 0.1
+    streaming: true
+  langgraph:
+    max_recursion: 50
+    checkpointer: memory
+  rate_limits:
+    claude_rpm: 50
+    github_rpm: 30
+
+analysis_config.yaml:
+  cyclomatic_high_threshold: 10
+  cognitive_high_threshold: 15
+  clone_similarity_threshold: 0.9
+  dead_code_confidence: 0.85
+  languages:
+    - python
+    - javascript
+    - typescript
+    - go
+    - rust
+    - java
+    - cpp
+    - c
+    - ruby
+    - php
+  codebert_batch_size: 32
+  max_function_tokens: 512
+
+github_config.yaml:
+  target_repos:
+    python:
+      - psf/requests
+      - pallets/flask
+      - tiangolo/fastapi
+      - langchain-ai/langchain
+      - huggingface/transformers
+    javascript:
+      - expressjs/express
+      - axios/axios
+    go:
+      - gin-gonic/gin
+    rust:
+      - tokio-rs/tokio
+  max_file_size_kb: 500
+  max_files_per_repo: 1000
+
+generation_config.yaml:
+  docstring_style: google
+  include_examples: true
+  include_type_hints: true
+  max_doc_tokens: 512
+  test_frameworks: [pytest, hypothesis]
+  batch_size: 5
+
+evaluation_config.yaml:
+  bertscore_model: microsoft/deberta-xlarge-mnli
+  rouge_variants: [rouge1, rouge2, rougeL]
+  coverage_thresholds:
+    functions: 0.8
+    classes: 0.9
+    modules: 0.7
+  rubric_pass_score: 18
+
+═══════════════════════════════════════════
+SECTION 7 — 22 VISUALIZATIONS (ALL REAL DATA)
+═══════════════════════════════════════════
+
+ALL using real GitHub repo data.
+Dev Intelligence dark blue theme.
+
+PAGE 1 — REPO OPS CENTER (main):
+
+VIZ01: REPO INPUT + LIVE ANALYSIS FEED
+  Input box: GitHub repo URL (owner/repo)
+  Submit → pipeline starts
+  Real-time log of agent steps (SSE stream)
+  Progress bar per stage: Fetch/Parse/Analyze/Generate
+  Claude streaming output visible live
+
+VIZ02: REPO OVERVIEW CARD
+  Real GitHub data: Stars / Forks / Contributors /
+                    Languages / License / Last Commit
+  Language breakdown pie chart
+  Commit frequency heatmap (GitHub-style)
+  Open issues + PRs count
+
+VIZ03: CODE COMPLEXITY HEATMAP
+  Treemap: files colored by cyclomatic complexity
+  Size = lines of code
+  Color: green=simple, red=complex
+  Click file → drill into function-level complexity
+
+VIZ04: DOCUMENTATION COVERAGE GAUGE
+  Circular gauge: overall doc coverage %
+  Breakdown: functions / classes / modules
+  Before vs after HIVE-AGENT generation
+  Per-language coverage bars
+
+VIZ05: GENERATED DOC PREVIEW PANEL
+  Side-by-side: original code | generated docstring
+  Stream new docs as Claude generates them
+  Syntax-highlighted code (Pygments)
+  Edit + approve button per doc
+
+VIZ06: GENERATED TESTS PANEL
+  Show auto-generated pytest + Hypothesis tests
+  Syntax highlighted
+  Test count per file
+  Estimated coverage improvement
+
+VIZ07: AGENT ACTIVITY LOG (live)
+  Scrolling: TIMESTAMP | AGENT | ACTION | TOKENS_USED
+  Claude tool calls highlighted in blue
+  Token counter + estimated cost ($)
+
+PAGE 2 — CODE INTELLIGENCE LAB:
+
+VIZ08: DEPENDENCY GRAPH (Cytoscape)
+  NetworkX graph rendered in dash-cytoscape
+  Nodes = modules, Edges = imports
+  Node size = PageRank score
+  Color: green=well-documented, red=needs-docs
+  Click node → show module stats
+  Zoom + pan + filter
+
+VIZ09: COMPLEXITY DISTRIBUTION HISTOGRAM
+  X: cyclomatic complexity, Y: function count
+  Real distributions from fetched repos
+  Threshold line at 10 (high complexity)
+  Functions above threshold listed below
+
+VIZ10: CODE CLONE DETECTION MAP
+  Scatter: function A vs function B similarity
+  Clusters of clones highlighted
+  Clone pair details on hover
+  % clone code in codebase
+
+VIZ11: CALL GRAPH VISUALIZATION (Cytoscape)
+  Directed graph: function → called functions
+  Depth-first from selected entry point
+  Highlight: recursive functions / deep chains
+  Dead code nodes grayed out
+
+VIZ12: SECURITY SCAN RESULTS
+  Bandit findings per severity: HIGH/MEDIUM/LOW
+  File + line number per finding
+  CWE category breakdown
+  Trend: current vs previous scan
+
+VIZ13: CODE SMELL RADAR
+  5-axis radar: God Classes / Long Methods /
+                Dead Code / Circular Deps / Clone Code
+  Current repo vs benchmark (top-50 repos mean)
+
+PAGE 3 — AGENT FLOW MONITOR:
+
+VIZ14: LANGGRAPH 8-NODE FLOW (Cytoscape)
+  8 nodes: Fetcher/Parser/Analyzer/Similarity/
+           DocAgent/Review/TestAgent/Evaluator
+  Live highlighting as each node runs
+  Parallel nodes (parser+similarity) shown simultaneously
+  Edge labels: data being passed
+
+VIZ15: AGENT DECISION TIMELINE
+  Gantt chart: 8 agents × time
+  Tool calls shown as dots
+  Claude API calls highlighted (cost marker)
+  Parallel execution visible
+
+VIZ16: CLAUDE API USAGE TRACKER
+  Token usage per agent (input + output)
+  Running cost in USD
+  Tokens/doc ratio
+  Rate limit status bar
+
+VIZ17: TOOL CALL FREQUENCY HEATMAP
+  X: tool name, Y: agent
+  Color = call frequency
+  Most-used tools highlighted
+
+PAGE 4 — DOC QUALITY EVALUATION:
+
+VIZ18: BERTSCORE + ROUGE DASHBOARD
+  4 metric lines over time (per repo analyzed):
+    BERTScore F1 / ROUGE-1 / ROUGE-2 / ROUGE-L
+  Per-file quality bar chart
+  Best vs worst documented files
+
+VIZ19: DOC QUALITY RUBRIC BREAKDOWN
+  6-axis radar per repo:
+    completeness/accuracy/clarity/
+    examples/edge_cases/consistency
+  Current repo vs benchmark mean
+  Top-10 highest quality docstrings shown
+
+VIZ20: BEFORE VS AFTER COMPARISON
+  Side-by-side quality metrics:
+    coverage before / after HIVE-AGENT
+    BERTScore before / after
+  Delta improvement highlighted
+
+PAGE 5 — REPO HEALTH DASHBOARD:
+
+VIZ21: COMMIT ACTIVITY ANALYSIS
+  Real GitHub commit history heatmap
+  Commit frequency by: hour of day / day of week
+  Top contributors bar chart
+  PR merge time distribution
+
+VIZ22: REPO HEALTH SCORECARD
+  Live metrics:
+    Doc Coverage % / Complexity Score /
+    Security Issues / Clone % / Test Coverage /
+    Commit Frequency / Open Issues /
+    Claude Tokens Used / Cost ($)
+  Traffic light per metric
+  Overall health score: A/B/C/D/F grade
+
+═══════════════════════════════════════════
+SECTION 8 — UI THEME (EXACT)
+═══════════════════════════════════════════
+
+dashboard/theme.py:
+BG_PRIMARY  = '#060809'
+BG_PANEL    = '#090c10'
+BG_CARD     = '#0c1016'
+BORDER      = '#0e1c2a'
+ACCENT_BLUE = '#378add'
+ACCENT_DIM  = '#0c2240'
+SUCCESS     = '#1d9e75'
+WARNING     = '#ba7517'
+CRITICAL    = '#e24b4a'
+INFO        = '#85b7eb'
+TEXT        = '#b5d4f4'
+TEXT_DIM    = '#142233'
+FONT        = 'JetBrains Mono, monospace'
+
+Header:
+  ◈ HIVE-AGENT  [CODEBASE INTELLIGENCE v1.0]
+  REPOS ANALYZED: [N] | DOCS GENERATED: [N] |
+  TOKENS USED: [N] | COST: $[amount] | ● ONLINE
+  [timestamp]
+
+Status bar:
+  [CLAUDE: claude-sonnet-4-6][GITHUB: CONNECTED]
+  [CODEBERT: LOADED][LANGGRAPH: 8 NODES][RATE: OK]
+
+═══════════════════════════════════════════
+SECTION 9 — ALL 30 TESTS
+═══════════════════════════════════════════
+
+tests/conftest.py:
+  All fixtures use REAL data:
+  real_repo_path() → cloned psf/requests locally
+  real_python_file() → requests/api.py content
+  ast_result() → parsed real Python file
+  dep_graph() → real NetworkX graph from requests
+  claude_client() → real Anthropic client
+
+test_github.py (5):
+  test_rest_client_fetches_real_repo
+    → get_repo('psf','requests') → has 'stargazers_count'
+  test_graphql_returns_contributor_data
+    → get_contributor_graph('psf','requests') → len > 5
+  test_repo_fetcher_clones_successfully
+    → clone_repo('psf','requests') → path exists, is git repo
+  test_commit_history_nonzero
+    → get_commits('psf','requests', 10) → len == 10
+  test_rate_limit_handler_works
+    → inject 403 response → sleep + retry
+
+test_analysis.py (6):
+  test_ast_parses_real_file
+    → parse_file('requests/api.py') → functions not empty
+  test_cyclomatic_complexity_formula
+    → inject known function → complexity == expected
+  test_treesitter_parses_javascript
+    → parse_file('app.js', 'javascript') → functions found
+  test_dependency_graph_has_correct_edges
+    → build from requests/ → 'requests.api' → 'requests.sessions'
+  test_pagerank_sums_to_one
+    → sum(pagerank.values()) ≈ 1.0
+  test_codebert_embedding_shape
+    → embed_function('def foo(): pass') → shape (768,)
+
+test_agents.py (6):
+  test_full_graph_runs_on_real_repo
+    → run(state with psf/requests) → generated_docs not empty
+  test_all_8_nodes_in_trace
+    → pipeline_trace contains all 8 node names
+  test_claude_tool_use_called
+    → doc_agent uses generate_function_doc tool
+  test_parallel_nodes_execute
+    → parser + similarity run in same step
+  test_evaluator_computes_all_metrics
+    → doc_quality_scores has bertscore + rouge + coverage
+  test_token_usage_tracked
+    → claude_tokens_used > 0 after run
+
+test_generation.py (5):
+  test_function_docgen_produces_google_style
+    → generated doc has 'Args:', 'Returns:' sections
+  test_test_generator_valid_syntax
+    → compile(generated_test_code, '', 'exec') → no error
+  test_hypothesis_test_uses_given_decorator
+    → '@given' in generated_hypothesis_test
+  test_readme_generation_has_sections
+    → generated README has '##' headers
+  test_streaming_yields_chunks
+    → list(stream_generate(prompt)) → len > 1
+
+test_evaluation.py (4):
+  test_bertscore_perfect_match_is_one
+    → compute_bertscore(['hello'],['hello']) → f1 ≈ 1.0
+  test_rouge_recall_correct
+    → rouge(['a b c d'],['a b']) → recall['rouge2'] > 0
+  test_coverage_zero_for_undocumented
+    → undocumented_file → coverage == 0.0
+  test_rubric_max_score_is_30
+    → rubric.max_score == 30
+
+test_property_based.py (4) ← Hypothesis tests:
+  @given(st.text(min_size=1))
+  test_ast_parser_never_crashes(code_str):
+    → parse_file (in memory) → no unhandled exception
+
+  @given(st.lists(st.floats(0,1), min_size=2))
+  test_cosine_similarity_range(vectors):
+    → similarity ≈ in [-1.0, 1.0]
+
+  @given(st.dictionaries(st.text(), st.integers()))
+  test_pagerank_always_sums_to_one(graph_dict):
+    → build graph → pagerank sums ≈ 1.0
+
+  @given(st.integers(min_value=1, max_value=100))
+  test_complexity_score_positive(n_branches):
+    → inject n_branches → complexity >= n_branches
+
+═══════════════════════════════════════════
+SECTION 10 — MAKEFILE
+═══════════════════════════════════════════
+
+make install    → pip install -r requirements.txt
+make fetch      → python github/repo_fetcher.py --clone-targets
+make analyze    → python pipeline/main.py --repo psf/requests
+make run        → python dashboard/app.py (OPENS BROWSER AUTO)
+make api        → uvicorn api.server:app --reload --port 8000
+make evaluate   → python evaluation/benchmark_runner.py
+make test       → pytest tests/ -v --color=yes
+make lint       → black . --line-length 100 && flake8 .
+make notebook   → jupyter notebook notebooks/
+make clean      → find . -name __pycache__ -exec rm -rf {} +
+
+═══════════════════════════════════════════
+SECTION 11 — NOTEBOOKS (REAL DATA)
+═══════════════════════════════════════════
+
+01_repo_analysis_exploration.ipynb:
+  - Clone psf/requests + pallets/flask
+  - AST parse both repos → function count stats
+  - Dependency graph visualization (NetworkX + Plotly)
+  - Complexity distribution histogram
+  - CodeBERT embedding PCA of all functions
+  - Code clone detection results
+
+02_agent_decisions_analysis.ipynb:
+  - Run HIVE-AGENT on psf/requests
+  - Agent decision timeline visualization
+  - Tool call frequency analysis
+  - Claude token usage breakdown
+  - Generated docstring samples (before/after)
+  - Generated test samples
+
+03_doc_quality_evaluation.ipynb:
+  - BERTScore + ROUGE on 50 functions
+  - Quality rubric distribution
+  - Before vs after doc coverage
+  - Best/worst generated docs analysis
+  - Cost per repo analysis ($)
+  - Benchmark: HIVE-AGENT vs no-doc baseline
+
+═══════════════════════════════════════════
+FINAL CHECKLIST — ALL GREEN BEFORE COMMIT
+═══════════════════════════════════════════
+
+REAL DATA:
+[ ] psf/requests cloned successfully
+[ ] pallets/flask cloned successfully
+[ ] GitHub REST API returns real repo metadata
+[ ] GitHub GraphQL returns contributor data
+[ ] grep fake|mock|hardcoded → ZERO in github/
+
+CODE:
+[ ] All 82 files created and complete
+[ ] grep TODO|pass|NotImplemented|\.\.\. → ZERO in .py
+[ ] python -c "
+    from github.graphql_client import GitHubGraphQLClient;
+    from analysis.ast_parser import PythonASTParser;
+    from analysis.similarity_engine import CodeSimilarityEngine;
+    from agents.graph import HiveAgentGraph;
+    from generation.claude_client import ClaudeClient;
+    from evaluation.doc_evaluator import DocumentationEvaluator;
+    from dashboard.app import app;
+    print('ALL IMPORTS OK')" → ALL IMPORTS OK
+
+MODELS:
+[ ] CodeBERT loads without error
+[ ] GraphCodeBERT loads without error
+[ ] tree-sitter grammars compiled for all 10 languages
+
+RUNTIME:
+[ ] make run → browser opens localhost:8050 AUTOMATICALLY
+[ ] Repo URL input → analysis starts → progress visible
+[ ] Docs stream live as Claude generates (VIZ05)
+[ ] Dependency graph renders in Cytoscape (VIZ08)
+[ ] All 22 visualizations render with real data
+[ ] Blue dev ops theme applied throughout
+[ ] Token usage tracked in real-time (VIZ16)
+
+TESTS:
+[ ] pytest tests/ -v → 30/30 PASSED
+[ ] Hypothesis tests run → no falsifying examples
+[ ] black --check . --line-length 100 → clean
+[ ] flake8 . --max-line-length=100 → 0 errors
+[ ] All 3 notebooks Restart & Run All → no errors
+
+FINAL:
+[ ] GitHub Actions CI → green on main
+[ ] README 14 sections complete
+[ ] Commit message matches RULE 9 exactly
+[ ] PR title: "feat: complete HIVE-AGENT implementation"
+[ ] Merge ONLY after CI green
+  
