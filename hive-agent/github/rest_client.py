@@ -42,7 +42,9 @@ class GitHubRESTClient:
         return self._get(f"/repos/{owner}/{repo}/contents/{path}")
 
     def get_commits(self, owner: str, repo: str, n: int = 100) -> List[Dict]:
-        return self._get(f"/repos/{owner}/{repo}/commits", params={"per_page": n})
+        # GitHub REST API caps per_page at 100
+        per_page = min(n, 100)
+        return self._get(f"/repos/{owner}/{repo}/commits", params={"per_page": per_page})
 
     def get_pulls(self, owner: str, repo: str, state: str = "all") -> List[Dict]:
         return self._get(f"/repos/{owner}/{repo}/pulls", params={"state": state, "per_page": 100})

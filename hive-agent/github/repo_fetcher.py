@@ -93,11 +93,15 @@ class RepoFetcher:
             logger.info(f"Repo already cloned at {dest_path}")
             return dest_path
         url = f"https://github.com/{owner}/{repo}.git"
-        if self.token:
-            url = f"https://{self.token}@github.com/{owner}/{repo}.git"
         os.makedirs(dest, exist_ok=True)
         logger.info(f"Cloning {owner}/{repo} to {dest_path}")
-        git.Repo.clone_from(url, dest_path, depth=50)
+        # Pass auth via HTTP header to avoid token appearing in URLs and logs
+        clone_env = {**os.environ}
+        if self.token:
+            clone_env["GIT_CONFIG_COUNT"] = "1"
+            clone_env["GIT_CONFIG_KEY_0"] = "http.extraheader"
+            clone_env["GIT_CONFIG_VALUE_0"] = f"Authorization: token {self.token}"
+        git.Repo.clone_from(url, dest_path, depth=50, env=clone_env)
         return dest_path
 
     def fetch_all_files(
