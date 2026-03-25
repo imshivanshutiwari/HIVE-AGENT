@@ -1,4 +1,0 @@
-# file: /home/runner/work/HIVE-AGENT/HIVE-AGENT/hive-agent/github/commit_analyzer.py
-# hypothesis_version: 6.151.9
-
-[100, '+00:00', 'Z', 'additions', 'author', 'avg_additions', 'avg_deletions', 'commit', 'commits_by_day', 'commits_by_hour', 'date', 'deletions', 'email', 'files', 'message', 'name', 'sha', 'stats', 'top_authors', 'total_commits', 'unique_authors', 'unknown']

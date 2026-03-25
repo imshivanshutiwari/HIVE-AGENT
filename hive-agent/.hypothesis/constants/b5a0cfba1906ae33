@@ -1,4 +1,0 @@
-# file: /home/runner/work/HIVE-AGENT/HIVE-AGENT/hive-agent/analysis/treesitter_parser.py
-# hypothesis_version: 6.151.9
-
-[200, 500, '&&', '..', '.c', '.cc', '.cpp', '.go', '.java', '.js', '.php', '.rb', '.rs', '.ts', '<anonymous>', '?', 'arrow_function', 'build', 'c', 'call', 'case', 'catch', 'cpp', 'else', 'for', 'func', 'function_declaration', 'function_definition', 'function_item', 'go', 'identifier', 'if', 'ignore', 'import_declaration', 'import_spec', 'import_statement', 'include_expression', 'java', 'javascript', 'language', 'method_declaration', 'method_definition', 'name', 'php', 'preproc_include', 'property_identifier', 'rb', 'require_expression', 'ruby', 'rust', 'tree_sitter_c', 'tree_sitter_cpp', 'tree_sitter_go', 'tree_sitter_java', 'tree_sitter_php', 'tree_sitter_ruby', 'tree_sitter_rust', 'typescript', 'unknown', 'use_declaration', 'utf-8', 'while', '||']

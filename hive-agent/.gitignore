@@ -43,3 +43,4 @@ wandb/
 .vscode/
 *.swp
 *.swo
+/.hypothesis

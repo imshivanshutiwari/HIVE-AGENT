@@ -1,4 +1,0 @@
-# file: /home/runner/work/HIVE-AGENT/HIVE-AGENT/hive-agent/agents/parser_agent.py
-# hypothesis_version: 6.151.9
-
-[200, 'all_files', 'args', 'ast_results', 'bases', 'body_lines', 'c', 'calls_made', 'classes', 'cognitive_complexity', 'complexity_estimate', 'cpp', 'decorators', 'docstring', 'end_line', 'functions', 'go', 'imports', 'is_async', 'is_from', 'java', 'javascript', 'language', 'line_count', 'lineno', 'methods', 'module', 'module_docstring', 'name', 'names', 'parse_error', 'parser_node:start', 'path', 'php', 'pipeline_trace', 'python', 'raises', 'return_type', 'ruby', 'rust', 'source', 'start_line', 'typescript', 'unknown', 'yields']

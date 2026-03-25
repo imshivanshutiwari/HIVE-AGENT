@@ -1,4 +1,0 @@
-# file: /home/runner/work/HIVE-AGENT/HIVE-AGENT/hive-agent/analysis/code_smell_detector.py
-# hypothesis_version: 6.151.9
-
-['Duplicate code block', 'clone_code', 'deep_nesting', 'god_class', 'high', 'ignore', 'long_method', 'long_param_list', 'low', 'medium', 'r', 'utf-8']

@@ -1,4 +1,0 @@
-# file: /home/runner/work/HIVE-AGENT/HIVE-AGENT/hive-agent/github/rest_client.py
-# hypothesis_version: 6.151.9
-
-[100, 'Accept', 'Authorization', 'X-RateLimit-Reset', 'all', 'per_page', 'state']

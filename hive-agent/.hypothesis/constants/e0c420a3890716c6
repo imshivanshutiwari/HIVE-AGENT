@@ -1,4 +1,0 @@
-# file: /home/runner/work/HIVE-AGENT/HIVE-AGENT/hive-agent/agents/similarity_agent.py
-# hypothesis_version: 6.151.9
-
-[0.9, 200, '.py', 'ast_results', 'body', 'category', 'cluster_id', 'code_smells', 'dead_code', 'description', 'file_a', 'file_b', 'filepath', 'func_a', 'func_b', 'function_name', 'functions', 'line', 'lineno', 'low', 'name', 'pipeline_trace', 'reason', 'score', 'severity', 'similar_clusters', 'similarity', 'source']
