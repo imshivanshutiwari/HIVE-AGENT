@@ -47,7 +47,6 @@ class ComplexityScorer:
     def score_file(self, filepath: str) -> Optional[FileComplexity]:
         try:
             from radon.complexity import cc_visit, cc_rank
-            from radon.metrics import mi_visit
         except ImportError:
             logger.warning("radon not installed; using AST-based complexity")
             return self._score_file_ast(filepath)

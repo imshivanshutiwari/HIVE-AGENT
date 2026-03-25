@@ -1,4 +1,4 @@
-"""tree-sitter parser for 10 languages beyond Python."""
+"""tree-sitter parser for 9 languages beyond Python."""
 import logging
 import os
 from dataclasses import dataclass, field
@@ -67,10 +67,11 @@ class TreeSitterResult:
 
 
 class TreeSitterParser:
-    """tree-sitter parser for 10 languages."""
+    """tree-sitter parser for 9 languages."""
 
     def __init__(self):
         self.parsers: Dict = {}
+        self.languages: Dict = {}
         self._init_parsers()
 
     def _init_parsers(self):
@@ -105,6 +106,7 @@ class TreeSitterParser:
                     language = Language(lang_module.language())
                     parser.set_language(language)
                     self.parsers[lang_name] = parser
+                    self.languages[lang_name] = language
             except Exception as e:
                 logger.warning(f"Could not load tree-sitter grammar for {lang_name}: {e}")
 
@@ -152,8 +154,7 @@ class TreeSitterParser:
             query_str = FUNCTION_QUERIES.get(language, "")
             if not query_str or language not in self.parsers:
                 return []
-            parser = self.parsers[language]
-            ts_lang = parser.get_language() if hasattr(parser, "get_language") else None
+            ts_lang = self.languages.get(language)
             if ts_lang is None:
                 return self._extract_functions_fallback(tree, source)
             query = ts_lang.query(query_str)

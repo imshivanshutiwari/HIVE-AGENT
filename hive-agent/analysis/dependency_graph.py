@@ -64,7 +64,7 @@ class DependencyGraphBuilder:
 
     def _path_to_module(self, filepath: str, repo_path: str) -> str:
         rel = os.path.relpath(filepath, repo_path)
-        module = rel.replace(os.sep, ".").rstrip(".py")[:-3]
+        module = rel.replace(os.sep, ".")[:-3]  # strip trailing ".py"
         return module
 
     def _count_lines(self, filepath: str) -> int:
