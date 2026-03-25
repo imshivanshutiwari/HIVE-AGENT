@@ -4,6 +4,7 @@ import sys
 from pathlib import Path
 from typing import Dict, List
 
+import hypothesis
 import pytest
 from hypothesis import assume, given, settings
 from hypothesis import strategies as st
@@ -31,7 +32,7 @@ def test_ast_parser_never_crashes(code_str: str):
         max_size=768,
     )
 )
-@settings(max_examples=30)
+@settings(max_examples=30, suppress_health_check=[hypothesis.HealthCheck.large_base_example])
 def test_cosine_similarity_range(vector: List[float]):
     """Cosine similarity should always be in [-1.0, 1.0]."""
     import numpy as np

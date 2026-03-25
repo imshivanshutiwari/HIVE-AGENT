@@ -1,0 +1,4 @@
+# file: /home/runner/work/HIVE-AGENT/HIVE-AGENT/hive-agent/evaluation/doc_evaluator.py
+# hypothesis_version: 6.151.9
+
+[0.0, 100, '.', ':', '>>>', 'None', 'args:', 'arguments:', 'bool', 'classes', 'dict', 'docstring', 'edge', 'empty', 'en', 'example', 'f1', 'float', 'functions', 'int', 'list', 'module_docstring', 'modules', 'negative', 'none', 'null', 'parse_error', 'precision', 'raise:', 'raises:', 'recall', 'return:', 'returns:', 'rouge1', 'rouge2', 'rougeL', 'str', 'usage', 'zero']

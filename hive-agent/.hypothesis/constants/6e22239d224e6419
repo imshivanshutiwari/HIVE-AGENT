@@ -1,0 +1,4 @@
+# file: /home/runner/work/HIVE-AGENT/HIVE-AGENT/hive-agent/agents/review_agent.py
+# hypothesis_version: 6.151.9
+
+['ast_results', 'claude_tokens_used', 'code_smells', 'complexity', 'complexity_scores', 'filepath', 'function_name', 'functions', 'lineno', 'name', 'pipeline_trace', 'review', 'review_comments', 'review_node:start']

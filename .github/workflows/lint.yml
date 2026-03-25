@@ -1,0 +1,21 @@
+name: Lint
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: hive-agent
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install black==24.4.2 flake8==7.0.0
+      - run: |
+          black --check . --line-length 100
+          flake8 . --max-line-length=100 --exclude=data,build,.git,__pycache__,notebooks

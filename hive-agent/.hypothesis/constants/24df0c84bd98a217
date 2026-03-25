@@ -1,0 +1,4 @@
+# file: /home/runner/work/HIVE-AGENT/HIVE-AGENT/hive-agent/agents/fetcher_agent.py
+# hypothesis_version: 6.151.9
+
+['/', 'GITHUB_TOKEN', 'additions', 'all_files', 'author', 'commit_history', 'content', 'contributors', 'data/repos/', 'date', 'deletions', 'disk_usage_kb', 'error', 'fetcher_node:start', 'forks', 'https://github.com/', 'language', 'languages', 'license', 'message', 'open_issues', 'open_prs', 'owner', 'path', 'pipeline_trace', 'primary_language', 'repo', 'repo_metadata', 'repo_path', 'repo_url', 'sha', 'size_bytes', 'stars', 'topics', 'total_commits', 'watchers']

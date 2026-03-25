@@ -1,0 +1,4 @@
+# file: /home/runner/work/HIVE-AGENT/HIVE-AGENT/hive-agent/analysis/similarity_engine.py
+# hypothesis_version: 6.151.9
+
+[0.0, 0.9, 1.0, 1000.0, 200, 512, 768, 1000, 'codebert', 'max_length', 'pt']

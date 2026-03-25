@@ -1,0 +1,4 @@
+# file: /home/runner/work/HIVE-AGENT/HIVE-AGENT/hive-agent/generation/claude_client.py
+# hypothesis_version: 6.151.9
+
+[4096, 1000000, 'ANTHROPIC_API_KEY', 'assistant', 'claude-sonnet-4-6', 'content', 'end_turn', 'role', 'text', 'tool_result', 'tool_use', 'tool_use_id', 'type', 'user']
