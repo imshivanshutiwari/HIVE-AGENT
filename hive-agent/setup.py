@@ -9,6 +9,6 @@ setup(
     install_requires=[
         "anthropic==0.25.1",
         "langchain==0.1.20",
-        "langgraph==0.0.55",
+        "langgraph==0.0.50",
     ],
 )
