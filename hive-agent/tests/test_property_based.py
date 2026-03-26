@@ -32,7 +32,13 @@ def test_ast_parser_never_crashes(code_str: str):
         max_size=768,
     )
 )
-@settings(max_examples=30, suppress_health_check=[hypothesis.HealthCheck.large_base_example])
+@settings(
+    max_examples=30,
+    suppress_health_check=[
+        hypothesis.HealthCheck.large_base_example,
+        hypothesis.HealthCheck.too_slow,
+    ],
+)
 def test_cosine_similarity_range(vector: List[float]):
     """Cosine similarity should always be in [-1.0, 1.0]."""
     import numpy as np
