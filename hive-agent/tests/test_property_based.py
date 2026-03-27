@@ -35,6 +35,7 @@ def test_ast_parser_never_crashes(code_str: str):
 @settings(
     max_examples=30,
     suppress_health_check=[
+        hypothesis.HealthCheck.data_too_large,
         hypothesis.HealthCheck.large_base_example,
         hypothesis.HealthCheck.too_slow,
     ],
